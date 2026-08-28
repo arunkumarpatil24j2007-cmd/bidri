@@ -6,12 +6,14 @@
   --color-graphite: #3A3634;
   --color-silver: #C9C6C1;
   --color-silver-bright: #EDEAE4;
-  --color-antique-gold: #8A6B3B;
-  --color-saffron: #D48200;
-  --color-rani-pink: #D1126E;
-  --color-peacock-teal: #006B7B;
+  --color-antique-gold: #D97706;
+  --color-saffron: #F59E0B;
+  --color-rani-pink: #E11D48;
+  --color-peacock-teal: #0D9488;
+  --color-ilkal-red: #BE123C;
   --color-crimson: #9B111E;
   --color-mist: #F4F1EA;
+  --color-pop-yellow: #FBBF24;
 
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-eyebrow: var(--font-italiana), "Italiana", serif;
@@ -24,9 +26,10 @@
   --text-black: #14100F;
   --text-body: #3A3634;
   --border-silver: rgba(201, 198, 193, 0.5);
-  --accent-rani: #D1126E;
-  --accent-gold: #8A6B3B;
-  --accent-teal: #006B7B;
+  --accent-rani: #E11D48;
+  --accent-gold: #D97706;
+  --accent-teal: #0D9488;
+  --accent-ilkal: #BE123C;
 }
 
 * {
@@ -51,33 +54,30 @@ body {
 }
 
 ::selection {
-  background-color: #D1126E;
+  background-color: #E11D48;
   color: #FBFAF8;
 }
 
 /* Restrained Focus States */
 :focus-visible {
-  outline: 1px solid #D1126E;
+  outline: 2px solid #E11D48;
   outline-offset: 3px;
 }
 
 /* Typography Utility Classes */
 .font-display {
   font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  font-weight: 300;
   letter-spacing: -0.02em;
-  line-height: 1.05;
 }
 
 .font-eyebrow {
   font-family: var(--font-italiana), "Italiana", serif;
   text-transform: uppercase;
-  letter-spacing: 0.42em;
+  letter-spacing: 0.38em;
 }
 
 .font-body {
   font-family: var(--font-jost), "Jost", sans-serif;
-  font-weight: 300;
   line-height: 1.75;
 }
 
@@ -86,18 +86,18 @@ body {
 }
 
 .headline-clamp {
-  font-size: clamp(2.8rem, 7.5vw, 8rem);
-  line-height: 1.02;
+  font-size: clamp(2.6rem, 6.8vw, 6.8rem);
+  line-height: 1.04;
   letter-spacing: -0.02em;
 }
 
 .headline-sub {
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
   line-height: 1.12;
   letter-spacing: -0.015em;
 }
 
-/* Subtle hairlines with zari/silver accents */
+/* Subtle hairlines */
 .hairline-b {
   border-bottom: 1px solid rgba(201, 198, 193, 0.45);
 }
@@ -110,10 +110,10 @@ body {
   border: 1px solid rgba(201, 198, 193, 0.45);
 }
 
-/* Royal Zari Accent Border */
+/* Royal Zari / Saffron Accent Border */
 .zari-border {
-  border: 1px solid rgba(212, 130, 0, 0.35);
-  box-shadow: inset 0 0 12px rgba(212, 130, 0, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.05);
 }
 
 /* Layout Container */
@@ -122,13 +122,13 @@ body {
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(24px, 6vw, 120px);
-  padding-right: clamp(24px, 6vw, 120px);
+  padding-left: clamp(20px, 5vw, 100px);
+  padding-right: clamp(20px, 5vw, 100px);
 }
 
 .section-luxury {
-  padding-top: clamp(88px, 11vw, 150px);
-  padding-bottom: clamp(88px, 11vw, 150px);
+  padding-top: clamp(72px, 9vw, 130px);
+  padding-bottom: clamp(72px, 9vw, 130px);
 }
 
 /* Underline link animation (left to right 300ms) with Rani Pink & Gold accents */
@@ -141,7 +141,7 @@ body {
   content: '';
   position: absolute;
   width: 0;
-  height: 1px;
+  height: 1.5px;
   bottom: -2px;
   left: 0;
   background-color: currentColor;
@@ -152,21 +152,79 @@ body {
   width: 100%;
 }
 
-/* Card hover glow */
+/* Indian Street Pop Badges & Stickers */
+.badge-street-pop {
+  background: rgba(225, 29, 72, 0.08);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  color: #BE123C;
+}
+
+.badge-gold-pop {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #B45309;
+}
+
+.badge-teal-pop {
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  color: #0F766E;
+}
+
+.badge-dark-pop {
+  background: #14100F;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FBFAF8;
+}
+
+/* Marquee Ticker Animation */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 28s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Card hover glow & pop lift */
 .card-hover-rich {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .card-hover-rich:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px -10px rgba(20, 16, 15, 0.08);
+  box-shadow: 0 16px 36px -10px rgba(20, 16, 15, 0.1);
+  border-color: rgba(225, 29, 72, 0.4);
 }
 
-/* Saree Pop Badge */
-.badge-saree-pop {
-  background: rgba(209, 18, 110, 0.08);
-  border: 1px solid rgba(209, 18, 110, 0.3);
-  color: #A30D55;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FBFAF8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C9C6C1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E11D48;
 }
 
 /* Reduced Motion Override */
