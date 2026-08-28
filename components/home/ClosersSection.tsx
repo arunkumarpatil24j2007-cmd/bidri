@@ -48,7 +48,8 @@ export const ClosersSection: React.FC = () => {
   ];
 
   return (
-    <div className="w-full bg-ivory select-none" id="journal">
+    <div className="w-full bg-ivory select-none cv-auto" id="journal">
+
       {/* 1. Value Row */}
       <section className="border-y border-silver/40 py-14 bg-mist/50" aria-label="Authenticity Values">
         <div className="container-luxury grid grid-cols-1 md:grid-cols-3 gap-10 text-left">

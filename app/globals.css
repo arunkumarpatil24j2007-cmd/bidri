@@ -208,6 +208,23 @@ body {
   border-color: rgba(225, 29, 72, 0.4);
 }
 
+/* High-Performance Rendering & CWV Optimizations */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+/* GPU Accelerated transforms */
+.gpu-accel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth Image Loading */
+img {
+  text-indent: -9999px;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;

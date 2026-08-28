@@ -2,11 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { products, Product } from '@/content/products';
 import { ProductCard } from '@/components/ui/ProductCard';
-import { QuickViewModal } from '@/components/ui/QuickViewModal';
 import { Reveal } from '@/components/ui/Reveal';
+
+const QuickViewModal = dynamic(
+  () => import('@/components/ui/QuickViewModal').then((mod) => mod.QuickViewModal),
+  { ssr: false }
+);
+
 
 export const FeaturedArtefacts: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');

@@ -7,7 +7,8 @@ import { Reveal } from '@/components/ui/Reveal';
 
 export const LookbookSection: React.FC = () => {
   return (
-    <section className="section-luxury container-luxury bg-ivory select-none" id="lookbook">
+    <section className="section-luxury container-luxury bg-ivory select-none cv-auto" id="lookbook">
+
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
         <div className="inline-flex items-center space-x-2 bg-rani-pink/10 border border-rani-pink/30 px-3 py-1">

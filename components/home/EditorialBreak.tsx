@@ -6,7 +6,8 @@ import { Reveal } from '@/components/ui/Reveal';
 
 export const EditorialBreak: React.FC = () => {
   return (
-    <section className="w-full bg-ivory select-none" aria-label="Cultural Flatlay Break">
+    <section className="w-full bg-ivory select-none cv-auto" aria-label="Cultural Flatlay Break">
+
       {/* Full-bleed Banner with Cultural Flatlay */}
       <div className="w-full relative aspect-[21/9] min-h-[340px] bg-mist overflow-hidden border-y border-silver/40">
         <Image

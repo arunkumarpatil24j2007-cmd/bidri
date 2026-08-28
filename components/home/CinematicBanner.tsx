@@ -8,7 +8,8 @@ import { Reveal } from '@/components/ui/Reveal';
 
 export const CinematicBanner: React.FC = () => {
   return (
-    <section className="relative w-full min-h-[520px] sm:min-h-[640px] flex items-center justify-center overflow-hidden select-none bg-bidri-black text-ivory">
+    <section className="relative w-full min-h-[520px] sm:min-h-[640px] flex items-center justify-center overflow-hidden select-none bg-bidri-black text-ivory cv-auto">
+
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

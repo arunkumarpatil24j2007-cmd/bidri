@@ -2,13 +2,18 @@
 
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, Sparkles, ShieldCheck, ArrowUpDown, X } from 'lucide-react';
 import { products, Product } from '@/content/products';
 import { collections } from '@/content/collections';
 import { ProductCard } from '@/components/ui/ProductCard';
-import { QuickViewModal } from '@/components/ui/QuickViewModal';
 import { Reveal } from '@/components/ui/Reveal';
+
+const QuickViewModal = dynamic(
+  () => import('@/components/ui/QuickViewModal').then((mod) => mod.QuickViewModal),
+  { ssr: false }
+);
 
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'craft-hours';
 

@@ -50,7 +50,8 @@ const motifs: Motif[] = [
 
 export const MotifsSection: React.FC = () => {
   return (
-    <section className="section-luxury container-luxury bg-ivory select-none" id="motifs">
+    <section className="section-luxury container-luxury bg-ivory select-none cv-auto" id="motifs">
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b border-silver/40 pb-6">
         <div>

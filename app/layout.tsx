@@ -3,8 +3,6 @@ import './globals.css';
 import { cormorant, italiana, jost, tiroDevanagari } from './fonts';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
-import { CustomCursor } from '@/components/ui/CustomCursor';
-import { CartDrawer } from '@/components/cart/CartDrawer';
 import { Footer } from '@/components/layout/Footer';
 import { LayoutClientContainer } from '@/components/layout/LayoutClientContainer';
 
@@ -113,8 +111,6 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <CustomCursor />
-
         <SmoothScroll>
           <AnnouncementBar />
           <LayoutClientContainer>
@@ -124,9 +120,8 @@ export default function RootLayout({
           </LayoutClientContainer>
           <Footer />
         </SmoothScroll>
-
-        <CartDrawer />
       </body>
     </html>
   );
 }
+

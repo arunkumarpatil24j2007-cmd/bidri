@@ -58,7 +58,7 @@ export const HorizontalCraft: React.FC = () => {
   const current = steps[activeStepIndex];
 
   return (
-    <section className="section-luxury bg-bidri-black text-ivory select-none" id="craft">
+    <section className="section-luxury bg-bidri-black text-ivory select-none cv-auto" id="craft">
       <div className="container-luxury">
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end mb-14 border-b border-white/15 pb-8">
