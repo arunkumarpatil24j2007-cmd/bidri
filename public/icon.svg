@@ -1,5 +1,26 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="0" fill="#14100F"/>
-  <text x="16" y="20" fill="#FBFAF8" text-anchor="middle" font-family="serif" font-size="15" font-weight="300" letter-spacing="1">B</text>
-  <line x1="8" y1="24" x2="24" y2="24" stroke="#C9C6C1" stroke-width="0.75"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bidri Black Velvet Disc -->
+  <circle cx="32" cy="32" r="30" fill="#14100F" stroke="#EDEAE4" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="27" fill="#14100F" stroke="#E11D48" stroke-width="0.75" stroke-dasharray="2 2"/>
+
+  <!-- Pure Silver Arabesque & 8-Point Bahmani Star Inlay -->
+  <!-- Outer Floral Nodes -->
+  <circle cx="32" cy="12" r="1.5" fill="#F8FAFC"/>
+  <circle cx="32" cy="52" r="1.5" fill="#F8FAFC"/>
+  <circle cx="12" cy="32" r="1.5" fill="#F8FAFC"/>
+  <circle cx="52" cy="32" r="1.5" fill="#F8FAFC"/>
+  <circle cx="18" cy="18" r="1.2" fill="#F8FAFC"/>
+  <circle cx="46" cy="18" r="1.2" fill="#F8FAFC"/>
+  <circle cx="18" cy="46" r="1.2" fill="#F8FAFC"/>
+  <circle cx="46" cy="46" r="1.2" fill="#F8FAFC"/>
+
+  <!-- Geometric Inlay Star Lines -->
+  <polygon points="32,16 35,26 45,23 38,31 46,39 36,37 32,48 28,37 18,39 26,31 19,23 29,26" fill="none" stroke="#F8FAFC" stroke-width="1.2" stroke-linejoin="round"/>
+
+  <!-- Central Silver Monogram 'B' -->
+  <text x="32" y="38" fill="#F8FAFC" font-family="'Italiana', 'Cormorant Garamond', serif" font-size="20" font-weight="600" text-anchor="middle" letter-spacing="0.5">B</text>
+
+  <!-- Rani Pink Core Accent -->
+  <circle cx="32" cy="32" r="2.2" fill="#E11D48"/>
+  <circle cx="32" cy="32" r="0.8" fill="#FFFFFF"/>
 </svg>

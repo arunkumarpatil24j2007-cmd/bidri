@@ -58,7 +58,12 @@ export const metadata: Metadata = {
     images: ['/img/hero/hero-1.jpg'],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/icon.svg',
   },
   robots: {
     index: true,
