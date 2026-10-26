@@ -9,11 +9,6 @@ const SearchModal = dynamic(
   { ssr: false }
 );
 
-const CustomCursor = dynamic(
-  () => import('@/components/ui/CustomCursor').then((mod) => mod.CustomCursor),
-  { ssr: false }
-);
-
 const CartDrawer = dynamic(
   () => import('@/components/cart/CartDrawer').then((mod) => mod.CartDrawer),
   { ssr: false }
@@ -24,7 +19,6 @@ export const LayoutClientContainer: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <>
-      <CustomCursor />
       <Navbar onOpenSearch={() => setIsSearchOpen(true)} />
       {children}
       {isSearchOpen && <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
@@ -32,5 +26,3 @@ export const LayoutClientContainer: React.FC<{ children: React.ReactNode }> = ({
     </>
   );
 };
-
-

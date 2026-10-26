@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, ShoppingBag, Heart } from 'lucide-react';
 import { Wordmark } from '@/components/ui/Wordmark';
 import { collections } from '@/content/collections';
-import { useCartStore, CurrencyCode } from '@/lib/cartStore';
+import { useCartStore } from '@/lib/cartStore';
 import { useWishlistStore } from '@/lib/wishlistStore';
 
 interface NavbarProps {
@@ -24,8 +24,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
 
   const cartCount = useCartStore((s) => s.getTotalCount());
   const openCart = useCartStore((s) => s.openCart);
-  const currency = useCartStore((s) => s.currency);
-  const setCurrency = useCartStore((s) => s.setCurrency);
   const savedCount = useWishlistStore((s) => s.savedSlugs.length);
 
   useEffect(() => {
@@ -45,47 +43,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
   const activeCollection = collections.find((c) => c.slug === activeCollectionSlug) || collections[0];
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 transition-colors duration-300">
-      {/* 1. Announcement Marquee Ticker */}
-      <div className="w-full bg-bidri-black text-ivory border-b border-white/10 text-[11px] font-body tracking-wider py-1.5 overflow-hidden select-none">
-        <div className="ticker-track flex items-center space-x-10">
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-rani-pink font-bold">✦</span>
-            <span>FREE WORLDWIDE EXPRESS COURIER ON ORDERS OVER ₹15,000 / $200</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-pop-yellow font-bold">✦</span>
-            <span>NEW DROP: BIDRI × ILKAL STREET POP EDIT 2026</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-rani-pink font-bold">✦</span>
-            <span>100% AUTHENTIC GI-TAGGED (NO. 12) BIDAR CRAFT</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-peacock-teal font-bold">✦</span>
-            <span>FAIR TRADE DIRECT ARTISAN COOPERATIVE • BIDAR, KARNATAKA</span>
-          </span>
-          {/* Duplicate for infinite loop */}
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-rani-pink font-bold">✦</span>
-            <span>FREE WORLDWIDE EXPRESS COURIER ON ORDERS OVER ₹15,000 / $200</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-pop-yellow font-bold">✦</span>
-            <span>NEW DROP: BIDRI × ILKAL STREET POP EDIT 2026</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-rani-pink font-bold">✦</span>
-            <span>100% AUTHENTIC GI-TAGGED (NO. 12) BIDAR CRAFT</span>
-          </span>
-          <span className="inline-flex items-center space-x-3 text-silver-bright font-light">
-            <span className="text-peacock-teal font-bold">✦</span>
-            <span>FAIR TRADE DIRECT ARTISAN COOPERATIVE • BIDAR, KARNATAKA</span>
-          </span>
-        </div>
-      </div>
-
-      {/* 2. Main Navigation Bar */}
+    <header className="fixed top-0 inset-x-0 z-40">
+      {/* Main Navigation Bar */}
       <nav
         className={`w-full transition-all duration-300 ${
           isScrolled || isMegaOpen
@@ -121,28 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                 COLLECTIONS
               </button>
               <Link
-                href="/#street-pop"
+                href="/about"
                 className="font-eyebrow text-[11.5px] text-bidri-black hover:text-rani-pink tracking-[0.35em] uppercase hover-link-rule py-1"
               >
-                BIDRI × STREET
-              </Link>
-              <Link
-                href="/craft"
-                className="font-eyebrow text-[11.5px] text-bidri-black hover:text-rani-pink tracking-[0.35em] uppercase hover-link-rule py-1"
-              >
-                THE CRAFT
-              </Link>
-              <Link
-                href="/artisans"
-                className="font-eyebrow text-[11.5px] text-bidri-black hover:text-rani-pink tracking-[0.35em] uppercase hover-link-rule py-1"
-              >
-                ARTISANS
-              </Link>
-              <Link
-                href="/journal"
-                className="font-eyebrow text-[11.5px] text-bidri-black hover:text-rani-pink tracking-[0.35em] uppercase hover-link-rule py-1"
-              >
-                STORIES
+                ABOUT
               </Link>
             </div>
           </div>
@@ -160,22 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
           </div>
 
           {/* Right Navigation Controls */}
-          <div className="flex items-center space-x-4 sm:space-x-6 justify-end">
-            {/* Currency Selector */}
-            <div className="hidden sm:block">
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-                className="bg-transparent border border-silver/50 text-[11px] font-body px-2 py-1 text-bidri-black rounded-none cursor-pointer focus:outline-none focus:border-rani-pink uppercase tracking-wider"
-                aria-label="Select Currency"
-              >
-                <option value="INR">₹ INR</option>
-                <option value="USD">$ USD</option>
-                <option value="GBP">£ GBP</option>
-                <option value="EUR">€ EUR</option>
-              </select>
-            </div>
-
+          <div className="flex items-center space-x-4 sm:space-x-5 justify-end">
             {/* Search Icon */}
             <button
               onClick={onOpenSearch}
@@ -188,8 +114,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
             {/* Wishlist Link */}
             <Link
               href="/account"
-              className="relative p-1.5 text-bidri-black hover:text-rani-pink transition-colors hidden sm:inline-block"
-              aria-label="View Wishlist"
+              className="relative p-1.5 text-bidri-black hover:text-rani-pink transition-colors"
+              aria-label={`View Wishlist${savedCount > 0 ? ` (${savedCount} items)` : ''}`}
             >
               <Heart size={18} strokeWidth={1.5} />
               {savedCount > 0 && (
@@ -202,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
             {/* Cart Button with Count Badge */}
             <button
               onClick={openCart}
-              className="flex items-center space-x-2 bg-bidri-black text-ivory px-3.5 py-1.5 rounded-none hover:bg-rani-pink transition-colors focus-visible:outline-none cursor-pointer shadow-xs"
+              className="flex items-center space-x-2 bg-bidri-black text-ivory px-3.5 py-1.5 rounded-lg hover:bg-rani-pink transition-colors focus-visible:outline-none cursor-pointer shadow-xs"
               aria-label={`Shopping bag with ${cartCount} items`}
             >
               <ShoppingBag size={15} strokeWidth={1.6} />
@@ -226,11 +152,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
             className="w-full bg-ivory border-b border-silver/40 shadow-xl"
           >
             <div className="container-luxury py-12 grid grid-cols-12 gap-12 items-center">
-              {/* Left: 6 Text Links */}
+              {/* Left: Collection Links */}
               <div className="col-span-6 space-y-3 pr-12 border-r border-silver/30">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-eyebrow text-[10px] text-rani-pink tracking-[0.42em] uppercase">
-                    THE HOUSES OF BIDRIWARE
+                    BROWSE COLLECTIONS
                   </span>
                   <Link
                     href="/shop"
@@ -244,9 +170,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                   <Link
                     key={c.slug}
                     href={`/collections/${c.slug}`}
+                    onClick={() => setIsMegaOpen(false)}
                     onMouseEnter={() => setActiveCollectionSlug(c.slug)}
-                    className={`group flex items-baseline justify-between py-2 border-b border-silver/20 transition-all duration-300 ${
-                      activeCollectionSlug === c.slug ? 'text-bidri-black pl-3 bg-mist/50' : 'text-graphite/80'
+                    className={`group flex items-baseline justify-between py-2.5 border-b border-silver/20 transition-all duration-300 rounded-md px-2 ${
+                      activeCollectionSlug === c.slug ? 'text-bidri-black bg-mist/50' : 'text-graphite/80'
                     }`}
                   >
                     <div className="flex items-baseline space-x-6">
@@ -266,7 +193,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
 
               {/* Right: Large Hover Image Crossfade */}
               <div className="col-span-6 flex flex-col justify-center">
-                <div className="relative aspect-[16/10] w-full bg-mist overflow-hidden border border-silver/30">
+                <div className="relative aspect-[16/10] w-full bg-mist overflow-hidden border border-silver/30 rounded-lg">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeCollection.slug}
@@ -288,10 +215,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                 </div>
                 <div className="mt-4 flex justify-between items-baseline">
                   <p className="font-body text-xs text-graphite/80 italic font-light">
-                    {activeCollection.headline} — {activeCollection.count} Artefacts
+                    {activeCollection.headline} — {activeCollection.count} Pieces
                   </p>
                   <Link
                     href={`/collections/${activeCollection.slug}`}
+                    onClick={() => setIsMegaOpen(false)}
                     className="font-eyebrow text-[10px] text-bidri-black hover:text-rani-pink tracking-[0.3em] uppercase hover-link-rule"
                   >
                     EXPLORE COLLECTION →
@@ -326,14 +254,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
 
             <div className="py-8 space-y-5">
               {[
-                { label: 'Shop All Artefacts', href: '/shop', highlight: true },
+                { label: 'Shop All Products', href: '/shop', highlight: true },
                 { label: 'Collections', href: '/collections' },
-                { label: 'Bidri × Street', href: '/#street-pop' },
-                { label: 'The 600-Yr Craft', href: '/craft' },
-                { label: 'Master Artisans', href: '/artisans' },
-                { label: 'Bespoke Commissions', href: '/bespoke' },
-                { label: 'Authenticity Registry', href: '/authenticity' },
-                { label: 'Journal & Stories', href: '/journal' },
+                { label: 'About Bidri Craft', href: '/about' },
               ].map((link, idx) => (
                 <motion.div
                   key={link.href}
@@ -352,30 +275,55 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Collection sub-links in mobile */}
+              <div className="pt-4 border-t border-silver/30 space-y-3">
+                <span className="font-eyebrow text-[10px] text-graphite/60 tracking-[0.3em] uppercase block">
+                  BROWSE BY COLLECTION
+                </span>
+                {collections.map((c, idx) => (
+                  <motion.div
+                    key={c.slug}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12 + 0.03 * idx, duration: 0.3 }}
+                  >
+                    <Link
+                      href={`/collections/${c.slug}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="font-display text-xl font-light text-graphite hover:text-rani-pink block py-1 transition-colors"
+                    >
+                      {c.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-6 border-t border-silver/30 space-y-4">
-              <div className="flex items-center justify-between text-xs text-graphite/80 font-body">
-                <span>Currency:</span>
-                <div className="flex space-x-2">
-                  {(['INR', 'USD', 'GBP', 'EUR'] as CurrencyCode[]).map((c) => (
-                    <button
-                      key={c}
-                      onClick={() => setCurrency(c)}
-                      className={`px-2 py-0.5 text-[11px] border ${
-                        currency === c ? 'bg-bidri-black text-ivory border-bidri-black' : 'border-silver/40 text-graphite'
-                      }`}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="flex justify-between items-center text-xs text-graphite/70 font-body">
-                <span>Bidar · Karnataka · Est. 1422</span>
-                <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="hover-link-rule text-bidri-black">
-                  My Account
+            {/* Mobile menu footer */}
+            <div className="pt-6 border-t border-silver/30 space-y-3">
+              <div className="flex justify-between items-center">
+                <Link
+                  href="/account"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-bidri-black"
+                >
+                  <Heart size={16} strokeWidth={1.5} />
+                  <span className="font-body text-sm">Wishlist ({savedCount})</span>
                 </Link>
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openCart();
+                  }}
+                  className="flex items-center space-x-2 bg-bidri-black text-ivory px-4 py-2 rounded-lg"
+                >
+                  <ShoppingBag size={14} strokeWidth={1.6} />
+                  <span className="font-body text-sm">Bag ({cartCount})</span>
+                </button>
+              </div>
+              <div className="text-xs text-graphite/70 font-body">
+                Bidar · Karnataka · Est. 1422
               </div>
             </div>
           </motion.div>
@@ -384,4 +332,3 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
     </header>
   );
 };
-

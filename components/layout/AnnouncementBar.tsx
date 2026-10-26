@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const messages = [
-  'HANDMADE IN BIDAR, KARNATAKA',
-  'GI CERTIFIED · SINCE 1422',
-  'COMPLIMENTARY WORLDWIDE SHIPPING',
+  'HANDMADE IN BIDAR, KARNATAKA · GI CERTIFIED',
+  'FREE SHIPPING ACROSS INDIA ON ALL ORDERS',
+  'AUTHENTIC BIDRIWARE · PURE SILVER INLAY · SINCE 1422',
 ];
 
 export const AnnouncementBar: React.FC = () => {

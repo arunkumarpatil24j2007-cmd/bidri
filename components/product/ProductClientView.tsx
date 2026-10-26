@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bookmark, Check, Shield, Compass, Sparkles } from 'lucide-react';
+import { Heart, Check, Shield, Truck, RotateCcw, Award, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { Product } from '@/content/products';
 import { artisans } from '@/content/artisans';
 import { useCartStore } from '@/lib/cartStore';
@@ -20,31 +20,35 @@ export const ProductClientView: React.FC<ProductClientViewProps> = ({
   product,
   relatedProducts,
 }) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [addedAnimation, setAddedAnimation] = useState(false);
+
   const addItem = useCartStore((s) => s.addItem);
+  const formatPrice = useCartStore((s) => s.formatPrice);
   const { isSaved, toggleSave } = useWishlistStore();
 
   const saved = isSaved(product.slug);
   const artisan = artisans.find((a) => a.id === product.artisanId) || artisans[0];
 
   const handleAddToCart = () => {
-    addItem(product, 1);
+    addItem(product, quantity);
     setAddedAnimation(true);
     setTimeout(() => setAddedAnimation(false), 2000);
   };
 
-  // Stack of images for left column
+  // Stack of images
   const images = [
     product.images.hero,
     product.images.macro,
-    product.images.inFrame || product.images.hero,
+    product.images.inFrame,
   ].filter(Boolean) as string[];
 
   // Accordion Items
   const accordionItems: AccordionItem[] = [
     {
-      id: 'dimensions',
-      title: 'Dimensions & Weight',
+      id: 'specifications',
+      title: 'Specifications & Dimensions',
       content: (
         <div className="space-y-2 text-xs font-light text-graphite">
           <p>
@@ -57,35 +61,24 @@ export const ProductClientView: React.FC<ProductClientViewProps> = ({
             <strong className="font-normal text-bidri-black">Base Alloy:</strong> 94% High-grade Zinc, 6% Refined Copper
           </p>
           <p>
-            <strong className="font-normal text-bidri-black">Inlay Grade:</strong> {product.inlay} (99.9% fine silver)
+            <strong className="font-normal text-bidri-black">Inlay Work:</strong> {product.inlay} (99.9% fine silver beaten wire & sheet)
           </p>
-
-          {/* Size Reference Line Drawing for Jewellery */}
-          {product.collection === 'jewellery' && (
-            <div className="pt-3 border-t border-silver/30 mt-3">
-              <span className="font-eyebrow text-[9px] text-graphite/60 tracking-[0.2em] uppercase block mb-2">
-                SCALE COMPARISON
-              </span>
-              <svg width="100%" height="48" viewBox="0 0 240 48" fill="none" className="stroke-silver">
-                <circle cx="24" cy="24" r="14" strokeWidth="0.8" strokeDasharray="2 2" />
-                <text x="24" y="27" fill="#3A3634" fontSize="7" textAnchor="middle" fontFamily="var(--font-jost)">1:1 SCALE</text>
-                <line x1="60" y1="24" x2="230" y2="24" strokeWidth="0.8" />
-                <line x1="60" y1="18" x2="60" y2="30" strokeWidth="0.8" />
-                <line x1="230" y1="18" x2="230" y2="30" strokeWidth="0.8" />
-                <text x="145" y="20" fill="#3A3634" fontSize="8" textAnchor="middle" fontFamily="var(--font-jost)">{product.dimensions.split('·')[0]}</text>
-              </svg>
-            </div>
-          )}
+          <p>
+            <strong className="font-normal text-bidri-black">Artisan Atelier:</strong> {product.artisanName} · Bidar, Karnataka
+          </p>
+          <p>
+            <strong className="font-normal text-bidri-black">GI Certification:</strong> Geographical Indication Registry Tag No. 12
+          </p>
         </div>
       ),
     },
     {
       id: 'making',
-      title: 'The Making',
+      title: 'Craftsmanship & Artisans',
       content: (
         <div className="space-y-4">
           <div className="flex items-center space-x-4">
-            <div className="relative w-12 h-12 bg-mist border border-silver/40 overflow-hidden flex-shrink-0">
+            <div className="relative w-12 h-12 rounded-lg bg-mist border border-silver/40 overflow-hidden flex-shrink-0">
               <Image
                 src={artisan.image}
                 alt={artisan.name}
@@ -99,14 +92,14 @@ export const ProductClientView: React.FC<ProductClientViewProps> = ({
             </div>
           </div>
           <p className="text-xs text-graphite font-light leading-relaxed">
-            Crafted over {product.craftHours} hours of freehand chiselling and Fort soil oxidation in our Old City Bidar atelier.
+            Crafted over {product.craftHours} hours of freehand chiselling (Kandankari), pure silver inlay (Tarkashi), and fort soil oxidation in our Bidar atelier.
           </p>
         </div>
       ),
     },
     {
       id: 'care',
-      title: 'Care & Maintenance',
+      title: 'Care & Maintenance Instructions',
       content: (
         <p className="text-xs text-graphite font-light leading-relaxed">
           {product.care}
@@ -115,21 +108,27 @@ export const ProductClientView: React.FC<ProductClientViewProps> = ({
     },
     {
       id: 'shipping',
-      title: 'Shipping & Returns',
+      title: 'Delivery & Returns (India)',
       content: (
-        <p className="text-xs text-graphite font-light leading-relaxed">
-          Dispatched in archival custom-moulded boxes with tamper-proof seal. Delivered within 3–5 working days globally. Complimentary worldwide shipping. Returns accepted within 14 days of receipt.
-        </p>
+        <div className="space-y-2 text-xs text-graphite font-light leading-relaxed">
+          <p>
+            <strong>Free Insured Express Delivery</strong> across India via Bluedart and Delhivery.
+          </p>
+          <p>
+            Dispatched in archival custom-cushioned wooden boxes with tamper-evident security seal. Delivered within 3–5 business days.
+          </p>
+          <p>
+            Hassle-free 7-day returns or exchanges if damaged during transit.
+          </p>
+        </div>
       ),
     },
   ];
 
-  const isPoa = product.price === 0;
-
   return (
     <div className="w-full bg-ivory pt-28 select-none">
       {/* Top Breadcrumb */}
-      <div className="container-luxury pb-8">
+      <div className="container-luxury pb-6">
         <nav aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2 text-xs font-body text-graphite/60 font-light">
             <li>
@@ -139,164 +138,244 @@ export const ProductClientView: React.FC<ProductClientViewProps> = ({
             </li>
             <li>/</li>
             <li>
-              <Link href={`/collections/${product.collection}`} className="hover-link-rule capitalize">
-                {product.collection.replace('-', ' ')}
+              <Link href="/shop" className="hover-link-rule">
+                Shop All
               </Link>
             </li>
             <li>/</li>
-            <li className="text-bidri-black">{product.name}</li>
+            <li>
+              <Link href={`/collections/${product.collection}`} className="hover-link-rule capitalize">
+                {product.collection.replace(/-/g, ' ')}
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-bidri-black font-medium line-clamp-1">{product.name}</li>
           </ol>
         </nav>
       </div>
 
       {/* Main Two-Column Layout */}
-      <div className="container-luxury pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Natural Vertical Stack of Images (no gaps other than 8px) */}
-          <div className="lg:col-span-7 space-y-2">
-            {images.map((imgSrc, idx) => (
-              <div
-                key={idx}
-                className="relative aspect-square w-full bg-mist border border-silver/40 overflow-hidden"
-                data-cursor="view"
-              >
-                <Image
-                  src={imgSrc}
-                  alt={`${product.name} view ${idx + 1}`}
-                  fill
-                  priority={idx === 0}
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover object-center"
-                />
+      <div className="container-luxury pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          
+          {/* Left Column: Image Showcase with Thumbnails */}
+          <div className="lg:col-span-7 space-y-4">
+            {/* Main Stage Image */}
+            <div className="relative aspect-square w-full bg-[#FBFAF8] rounded-xl border border-silver/35 overflow-hidden shadow-xs">
+              <Image
+                src={images[selectedImageIndex] || images[0]}
+                alt={`${product.name} view ${selectedImageIndex + 1}`}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover object-center transition-all duration-300"
+              />
+
+              {/* Badges on main image */}
+              <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
+                {product.edition === 'One of one' ? (
+                  <span className="bg-rani-pink text-ivory font-eyebrow text-[9.5px] tracking-widest px-3 py-1 uppercase rounded-md shadow-xs">
+                    1 OF 1 ARCHIVAL MASTERPIECE
+                  </span>
+                ) : (
+                  <span className="bg-bidri-black/90 backdrop-blur-xs text-silver-bright font-eyebrow text-[9px] tracking-widest px-2.5 py-0.5 uppercase border border-white/10 rounded-md">
+                    GI TAG #12 KARNATAKA
+                  </span>
+                )}
               </div>
-            ))}
+            </div>
+
+            {/* Thumbnails row */}
+            {images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {images.map((imgSrc, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImageIndex(idx)}
+                    className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer ${
+                      selectedImageIndex === idx
+                        ? 'border-bidri-black ring-2 ring-bidri-black/10'
+                        : 'border-silver/40 hover:border-graphite opacity-75 hover:opacity-100'
+                    }`}
+                    aria-label={`View photo ${idx + 1}`}
+                  >
+                    <Image
+                      src={imgSrc}
+                      alt={`${product.name} thumbnail ${idx + 1}`}
+                      fill
+                      className="object-cover object-center"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Right Rail: Sticky Right Column */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-7 text-left">
-            {/* 1. Collection Eyebrow */}
-            <span className="font-eyebrow text-[10px] text-graphite/60 tracking-[0.42em] uppercase block">
-              COLLECTION · {product.collection.replace('-', ' ')}
-            </span>
+          {/* Right Rail: Product Info & Order Placement */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6 text-left">
+            {/* 1. Collection & In-stock badge */}
+            <div className="flex items-center justify-between">
+              <span className="font-eyebrow text-[10px] text-graphite/70 tracking-[0.35em] uppercase font-medium">
+                {product.collection.replace(/-/g, ' ')}
+              </span>
+              <span className="inline-flex items-center space-x-1.5 text-xs text-peacock-teal font-medium bg-peacock-teal/10 px-2.5 py-0.5 rounded-full border border-peacock-teal/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-peacock-teal animate-pulse" />
+                <span>{product.stock > 0 ? 'In Stock · Ready to Dispatch' : 'Crafted to Order'}</span>
+              </span>
+            </div>
 
-            {/* 2. Name in Cormorant 40px */}
-            <h1 className="font-display text-4xl sm:text-[40px] font-light text-bidri-black leading-[1.1]">
+            {/* 2. Product Name */}
+            <h1 className="font-display text-3xl sm:text-4xl font-light text-bidri-black leading-snug">
               {product.name}
             </h1>
 
-            {/* 3. Price */}
-            <div className="font-body text-xl text-bidri-black font-light tracking-wide">
-              {product.formattedPrice}
+            {/* 3. Price Display */}
+            <div className="flex items-baseline space-x-3">
+              <span className="font-body text-3xl font-semibold text-bidri-black">
+                {formatPrice(product.price)}
+              </span>
+              <span className="text-xs font-body text-graphite/60">
+                (Inclusive of all taxes & delivery across India)
+              </span>
             </div>
 
-            {/* 4. One Line of Specification */}
-            <div className="font-body text-xs text-graphite/70 font-light border-y border-silver/30 py-2.5 flex items-center justify-between">
-              <span>{product.metal} · {product.inlay}</span>
-              <span>{product.edition} Edition</span>
+            {/* 4. Specifications Summary */}
+            <div className="p-3.5 bg-mist/60 rounded-lg border border-silver/30 font-body text-xs text-graphite space-y-1.5">
+              <div className="flex justify-between">
+                <span className="text-graphite/70">Materials:</span>
+                <span className="font-medium text-bidri-black">{product.metal} · {product.inlay}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-graphite/70">Dimensions:</span>
+                <span className="font-medium text-bidri-black">{product.dimensions}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-graphite/70">Craftsmanship:</span>
+                <span className="font-medium text-bidri-black">{product.craftHours} hours hand chisel</span>
+              </div>
             </div>
 
-            {/* 5. 45-Word Story */}
-            <p className="font-body text-[14px] text-graphite font-light leading-relaxed">
+            {/* 5. Short Description */}
+            <p className="font-body text-sm text-graphite font-light leading-relaxed">
               {product.story}
             </p>
 
-            {/* 6. ADD TO BAG / ENQUIRE full-width bidri-black bar */}
+            {/* 6. Purchase Area: Quantity & Add to Bag */}
             <div className="space-y-3 pt-2">
-              {isPoa ? (
-                <Link
-                  href={`/bespoke?enquiry=${product.slug}`}
-                  className="w-full h-14 bg-bidri-black text-ivory flex items-center justify-center font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-bidri-black transition-colors duration-300"
-                >
-                  ENQUIRE
-                </Link>
-              ) : (
+              <div className="flex items-center gap-3">
+                {/* Quantity Stepper */}
+                <div className="flex items-center border border-silver/50 rounded-lg bg-ivory px-2 py-1">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="p-2 text-graphite hover:text-bidri-black cursor-pointer"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <span className="px-4 font-body text-sm font-medium text-bidri-black">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
+                    className="p-2 text-graphite hover:text-bidri-black cursor-pointer"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+
+                {/* Primary Add to Bag Button */}
                 <button
                   onClick={handleAddToCart}
-                  className="w-full h-14 bg-bidri-black text-ivory flex items-center justify-center font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-bidri-black transition-colors duration-300 cursor-pointer focus-visible:outline-none"
+                  className={`flex-1 h-12 rounded-lg text-ivory flex items-center justify-center space-x-2 font-eyebrow text-xs tracking-[0.25em] uppercase font-medium transition-all duration-200 cursor-pointer shadow-md ${
+                    addedAnimation
+                      ? 'bg-peacock-teal'
+                      : 'bg-bidri-black hover:bg-rani-pink'
+                  }`}
                 >
-                  {addedAnimation ? 'ADDED TO BAG' : 'ADD TO BAG'}
+                  {addedAnimation ? (
+                    <>
+                      <Check size={16} />
+                      <span>ADDED TO YOUR BAG</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag size={16} />
+                      <span>ADD TO BAG · {formatPrice(product.price * quantity)}</span>
+                    </>
+                  )}
                 </button>
-              )}
 
-              {/* 7. SAVE text link */}
-              <button
-                onClick={() => toggleSave(product.slug)}
-                className="w-full py-2 text-center font-eyebrow text-[10px] text-graphite hover:text-bidri-black tracking-[0.25em] uppercase cursor-pointer hover-link-rule focus-visible:outline-none"
-              >
-                {saved ? '✓ SAVED TO WISHLIST' : 'SAVE TO WISHLIST'}
-              </button>
+                {/* Wishlist Button */}
+                <button
+                  onClick={() => toggleSave(product.slug)}
+                  className={`h-12 w-12 rounded-lg border flex items-center justify-center transition-colors cursor-pointer ${
+                    saved
+                      ? 'border-rani-pink bg-rani-pink/10 text-rani-pink'
+                      : 'border-silver/50 hover:border-bidri-black text-bidri-black bg-ivory'
+                  }`}
+                  aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
+                >
+                  <Heart size={18} fill={saved ? '#E11D48' : 'none'} />
+                </button>
+              </div>
             </div>
 
-            {/* 8. Four Thin Accordions */}
-            <div className="pt-4">
+            {/* 7. India Delivery & Trust Highlights */}
+            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-silver/30">
+              <div className="flex items-center space-x-2 text-xs font-body text-graphite">
+                <Truck size={15} className="text-antique-gold flex-shrink-0" />
+                <span>Free delivery across India</span>
+              </div>
+              <div className="flex items-center space-x-2 text-xs font-body text-graphite">
+                <Shield size={15} className="text-peacock-teal flex-shrink-0" />
+                <span>Karnataka GI Tag #12 Certified</span>
+              </div>
+              <div className="flex items-center space-x-2 text-xs font-body text-graphite">
+                <RotateCcw size={15} className="text-graphite flex-shrink-0" />
+                <span>7-Day Insured Transit Protection</span>
+              </div>
+              <div className="flex items-center space-x-2 text-xs font-body text-graphite">
+                <Award size={15} className="text-saffron flex-shrink-0" />
+                <span>Direct Artisan Cooperative</span>
+              </div>
+            </div>
+
+            {/* 8. Accordions */}
+            <div className="pt-2">
               <Accordion items={accordionItems} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Below the Fold: Full-Bleed Macro of Inlay */}
-      <section className="w-full bg-ivory border-y border-silver/40 py-24 select-none" aria-label="Inlay Macro Detail">
-        <div className="container-luxury">
-          <div className="mb-8 flex items-baseline justify-between">
-            <span className="font-eyebrow text-[10px] text-graphite/60 tracking-[0.42em] uppercase">
-              TARKASHI DETAIL · 100MM MACRO
-            </span>
-            <span className="font-body text-xs text-graphite/60 font-light">
-              Pure Silver Embedded in Matte Alloy
-            </span>
-          </div>
-
-          <div className="relative aspect-[16/9] w-full bg-mist border border-silver/40 overflow-hidden" data-cursor="view">
-            <Image
-              src={product.images.macro}
-              alt={`${product.name} extreme silver inlay macro`}
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Below the Fold: "Also from Bidar" with three products */}
+      {/* Related Handicrafts */}
       {relatedProducts.length > 0 && (
-        <section className="section-luxury container-luxury select-none" aria-label="Related Products">
-          <div className="mb-12 flex items-baseline justify-between">
-            <h2 className="font-display text-3xl font-light text-bidri-black">
-              Also from Bidar
-            </h2>
+        <section className="section-luxury container-luxury border-t border-silver/40 select-none" aria-label="Related Products">
+          <div className="mb-10 flex items-baseline justify-between">
+            <div>
+              <span className="font-eyebrow text-[10px] text-graphite/60 tracking-[0.35em] uppercase block">
+                COMPLEMENTARY ARTEFACTS
+              </span>
+              <h2 className="font-display text-3xl font-light text-bidri-black mt-1">
+                More Handcrafted Masterpieces
+              </h2>
+            </div>
             <Link
-              href="/collections"
-              className="font-eyebrow text-[10px] text-bidri-black tracking-[0.3em] uppercase hover-link-rule"
+              href="/shop"
+              className="font-eyebrow text-[11px] text-bidri-black hover:text-rani-pink tracking-[0.25em] uppercase hover-link-rule"
             >
-              VIEW ALL →
+              VIEW ALL CATALOGUE →
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {relatedProducts.slice(0, 3).map((rel) => (
               <ProductCard key={rel.slug} product={rel} />
             ))}
           </div>
         </section>
       )}
-
-      {/* Below the Fold: 60px-Tall Certificate Bar */}
-      <div className="w-full h-[60px] bg-mist border-t border-silver/40 flex items-center justify-center px-4 select-none">
-        <div className="container-luxury flex items-center justify-between text-xs font-body text-graphite">
-          <div className="flex items-center space-x-2">
-            <Shield size={14} className="text-bidri-black" />
-            <span>Every piece ships with a numbered Certificate of Authenticity.</span>
-          </div>
-          <Link
-            href="/authenticity"
-            className="font-eyebrow text-[10px] text-bidri-black tracking-[0.25em] uppercase hover-link-rule"
-          >
-            Verify →
-          </Link>
-        </div>
-      </div>
     </div>
   );
 };

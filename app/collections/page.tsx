@@ -2,98 +2,80 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 import { collections } from '@/content/collections';
 import { products } from '@/content/products';
-import { Reveal } from '@/components/ui/Reveal';
 
 export const metadata: Metadata = {
-  title: 'All Collections',
-  description: 'Six distinct houses of authentic Bidriware — jewellery, table and decor, barware, desk objects, gifting, and archival pieces.',
+  title: 'All Collections — Authentic Bidriware Handicrafts',
+  description: 'Curated collections of authentic Bidriware — home décor, sculptures and statues, barware, desk accessories, and traditional Indian gifts.',
 };
 
 export default function CollectionsPage() {
   return (
-    <div className="w-full bg-ivory pt-32 pb-24 select-none">
+    <div className="w-full bg-ivory pt-28 sm:pt-36 pb-24 select-none">
       <div className="container-luxury">
         {/* Header */}
-        <div className="max-w-2xl mb-20 space-y-4">
-          <span className="font-eyebrow text-[11px] text-graphite/60 tracking-[0.42em] uppercase block">
-            THE CATALOGUE
+        <div className="max-w-2xl mb-12 sm:mb-16 space-y-3">
+          <span className="font-eyebrow text-[10.5px] text-rani-pink tracking-[0.35em] uppercase font-medium block">
+            HERITAGE CATALOGUE
           </span>
-          <h1 className="font-display headline-sub font-light text-bidri-black">
-            The Six Collections
+          <h1 className="font-display text-4xl sm:text-5xl font-light text-bidri-black">
+            Curated Collections
           </h1>
-          <p className="font-body text-base text-graphite font-light max-w-[50ch]">
-            Every typology represents a dedicated chapter in Deccan court metalcraft, from wearable adornments to permanent archival monuments.
+          <p className="font-body text-sm sm:text-base text-graphite font-light max-w-[52ch] leading-relaxed">
+            Every collection represents an authentic expression of 600-year Deccan metalcraft, cast from zinc-copper alloy and inlaid with pure silver in Bidar, Karnataka.
           </p>
         </div>
 
-        {/* Collections Editorial Grid */}
-        <div className="space-y-32">
-          {collections.map((col, idx) => {
+        {/* Collections Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {collections.map((col) => {
             const colProducts = products.filter((p) => p.collection === col.slug);
-            const isReversed = idx % 2 === 1;
 
             return (
-              <section
+              <Link
                 key={col.slug}
-                className="border-t border-silver/40 pt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+                href={`/collections/${col.slug}`}
+                className="group flex flex-col bg-ivory rounded-xl overflow-hidden border border-silver/35 hover:border-silver transition-all duration-300 hover:shadow-lg"
               >
-                {/* Image (7 cols) */}
-                <div className={`lg:col-span-7 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                  <Reveal scale>
-                    <Link
-                      href={`/collections/${col.slug}`}
-                      className="block relative aspect-[16/10] w-full bg-mist border border-silver/40 overflow-hidden group"
-                      data-cursor="view"
-                    >
-                      <Image
-                        src={col.image}
-                        alt={col.name}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 55vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4 bg-ivory/95 px-3 py-1 font-eyebrow text-[10px] text-bidri-black tracking-[0.25em] uppercase border border-silver/30">
-                        {col.numeral} / {col.descriptor}
-                      </div>
-                    </Link>
-                  </Reveal>
-                </div>
-
-                {/* Narrative (5 cols) */}
-                <div
-                  className={`lg:col-span-5 space-y-6 ${
-                    isReversed ? 'lg:order-1 lg:pr-12' : 'lg:order-2 lg:pl-12'
-                  }`}
-                >
-                  <Reveal delay={0.1}>
-                    <span className="font-display text-sm text-silver italic font-light">
-                      Collection {col.numeral}
-                    </span>
-                    <h2 className="font-display text-4xl sm:text-5xl font-light text-bidri-black mt-1">
+                {/* Image */}
+                <div className="relative aspect-[16/11] w-full bg-mist overflow-hidden">
+                  <Image
+                    src={col.image}
+                    alt={col.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bidri-black/70 via-bidri-black/20 to-transparent" />
+                  
+                  <div className="absolute top-3.5 left-3.5 bg-ivory/90 px-2.5 py-1 rounded font-eyebrow text-[9px] text-bidri-black tracking-widest uppercase font-medium">
+                    HOUSE {col.numeral}
+                  </div>
+                  
+                  <div className="absolute bottom-3.5 inset-x-3.5 text-ivory">
+                    <h2 className="font-display text-2xl font-light">
                       {col.name}
                     </h2>
-                    <p className="font-body text-base text-graphite font-light leading-relaxed mt-4">
-                      {col.description}
+                    <p className="font-eyebrow text-[10px] text-antique-gold tracking-widest uppercase mt-0.5">
+                      {col.descriptor} · {colProducts.length} {colProducts.length === 1 ? 'Artefact' : 'Artefacts'}
                     </p>
-                  </Reveal>
-
-                  <Reveal delay={0.15}>
-                    <div className="pt-2 flex items-center justify-between border-t border-silver/30 pt-4">
-                      <span className="font-body text-xs text-graphite/70 font-light">
-                        {colProducts.length} {colProducts.length === 1 ? 'Artefact' : 'Artefacts'} in Collection
-                      </span>
-                      <Link
-                        href={`/collections/${col.slug}`}
-                        className="font-eyebrow text-[11px] text-bidri-black tracking-[0.35em] uppercase hover-link-rule"
-                      >
-                        EXPLORE HOUSES →
-                      </Link>
-                    </div>
-                  </Reveal>
+                  </div>
                 </div>
-              </section>
+
+                {/* Body */}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <p className="font-body text-xs text-graphite font-light leading-relaxed">
+                    {col.description}
+                  </p>
+
+                  <div className="pt-3 border-t border-silver/25 flex items-center justify-between text-xs font-eyebrow tracking-widest text-bidri-black group-hover:text-rani-pink uppercase font-medium">
+                    <span>EXPLORE PRODUCTS</span>
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </Link>
             );
           })}
         </div>

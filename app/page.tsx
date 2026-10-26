@@ -1,60 +1,31 @@
 import React from 'react';
 import { HeroBanner } from '@/components/home/HeroBanner';
-import { Marquee } from '@/components/ui/Marquee';
-import { BrandIntroSection } from '@/components/home/BrandIntroSection';
+import { CategoryTiles } from '@/components/home/CategoryTiles';
 import { FeaturedArtefacts } from '@/components/home/FeaturedArtefacts';
-import { StreetPopCampaign } from '@/components/home/StreetPopCampaign';
 import { CollectionsIndex } from '@/components/home/CollectionsIndex';
-import { LookbookSection } from '@/components/home/LookbookSection';
-import { HorizontalCraft } from '@/components/home/HorizontalCraft';
-import { MotifsSection } from '@/components/home/MotifsSection';
-import { EditorialBreak } from '@/components/home/EditorialBreak';
-import { CinematicBanner } from '@/components/home/CinematicBanner';
-import { DevanagariBand } from '@/components/home/DevanagariBand';
-import { ClosersSection } from '@/components/home/ClosersSection';
+import { CraftsmanshipIntro } from '@/components/home/CraftsmanshipIntro';
+import { TrustDelivery } from '@/components/home/TrustDelivery';
 
 export default function HomePage() {
   return (
     <div className="w-full bg-ivory">
-      {/* 1. Grand Hero Banner (Woman in Ilkal Saree holding Bidri Vase) */}
+      {/* 2. Compact Hero Section */}
       <HeroBanner />
 
-      {/* 2. Cultural Marquee Ticker */}
-      <Marquee />
+      {/* 3. Shop by Category — visual category tiles */}
+      <CategoryTiles />
 
-      {/* 3. Cultural Statement & 600-Year History */}
-      <BrandIntroSection />
-
-      {/* 4. The Featured Shop Edit (Interactive Product Grid & Quick View) */}
+      {/* 4. Bestsellers — product grid with square image cards & visible INR prices */}
       <FeaturedArtefacts />
 
-      {/* 5. Bidri × Street Pop Campaign (Sneakers + Ilkal Saree + Bidri Plate) */}
-      <StreetPopCampaign />
-
-      {/* 6. The Six Houses of Bidriware (Editorial Index) */}
+      {/* 5. Shop Collections — clear image-led collection cards */}
       <CollectionsIndex />
 
-      {/* 7. The New Deccan Anthology (Editorial Lookbook with Ilkal Sarees) */}
-      <LookbookSection />
+      {/* 6. Craftsmanship — short introduction to authentic Bidri craft */}
+      <CraftsmanshipIntro />
 
-      {/* 8. The 600-Year Craft Alchemy (Interactive Steps & Master Artisan) */}
-      <HorizontalCraft />
-
-      {/* 9. Visual Grammar & Inlay Techniques (Tarkashi, Taihnishan, etc.) */}
-      <MotifsSection />
-
-      {/* 10. Cultural Still Life & Editorial Break */}
-      <EditorialBreak />
-
-      {/* 11. Cinematic Nocturne Campaign (Night City Lights & Illuminated Ewer) */}
-      <CinematicBanner />
-
-      {/* 12. Cultural Linguistic Band */}
-      <DevanagariBand />
-
-      {/* 13. Closers: Values, Artisan Guild, Journal & Newsletter */}
-      <ClosersSection />
+      {/* 7. Trust and Delivery — verified Indian shipping, GI Tag, payments */}
+      <TrustDelivery />
     </div>
   );
 }
-

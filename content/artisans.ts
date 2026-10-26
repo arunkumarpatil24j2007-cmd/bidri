@@ -53,6 +53,6 @@ export const artisans: Artisan[] = [
     quote: 'Silver wire so thin it resembles morning mist. Every loop is drawn by hand.',
     bio: 'Zareena has pioneered women’s leadership in fine silver wire drawing and miniature filigree inlay, mentoring the next generation of young artisans in Bidar.',
     image: '/img/artisan/artisan-4.jpg',
-    signatureSpecialty: 'Jewellery Adornments & Miniature Inlay',
+    signatureSpecialty: 'Miniature Arabesque Inlay & Sacred Bowls',
   },
 ];

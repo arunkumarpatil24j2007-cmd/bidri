@@ -3,118 +3,92 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 export const HeroBanner: React.FC = () => {
-  const { scrollY } = useScroll();
-  const shouldReduceMotion = useReducedMotion();
-  const yParallax = useTransform(scrollY, [0, 900], [0, shouldReduceMotion ? 0 : 70]);
-
   return (
-    <section className="relative w-full min-h-[92vh] sm:min-h-screen flex items-center justify-start overflow-hidden select-none bg-bidri-black text-ivory">
-      {/* 1. Full-Bleed Background Image (Woman in Ilkal Saree with Bidri Vase) */}
-      <motion.div
-        style={{ y: yParallax }}
-        className="absolute inset-0 w-full h-[112%] -top-[6%] z-0"
-      >
+    <section className="relative w-full min-h-[65vh] sm:min-h-[72vh] flex items-center justify-start overflow-hidden select-none bg-bidri-black text-ivory">
+      {/* Background Image */}
+      <div className="absolute inset-0 w-full h-full z-0">
         <Image
           src="/img/hero/ilkal_hero_editorial.jpg"
-          alt="Indian woman in authentic red Ilkal saree holding an ornate handcrafted silver-inlaid Bidriware vase"
+          alt="Handcrafted Bidriware — authentic silver-inlaid metalware from Bidar, Karnataka"
           fill
           priority
           sizes="100vw"
           className="object-cover object-[center_35%] lg:object-right"
         />
-        {/* Cinematic Multi-Layer Gradient Overlays for High Legibility & Drama */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bidri-black/95 via-bidri-black/75 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bidri-black via-transparent to-bidri-black/40 z-10" />
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-ivory to-transparent z-20 opacity-15" />
-      </motion.div>
+        {/* Gradient overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bidri-black/90 via-bidri-black/65 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bidri-black/60 via-transparent to-bidri-black/30 z-10" />
+      </div>
 
-      {/* 2. Hero Content Overlaid directly on top */}
-      <div className="container-luxury relative z-30 pt-36 pb-24 sm:pt-44 sm:pb-32">
-        <div className="max-w-2xl space-y-7">
-          {/* Saree Pop Cultural Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center space-x-3 bg-ivory/10 backdrop-blur-md border border-ivory/20 px-4 py-1.5"
-          >
-            <span className="w-2 h-2 rounded-full bg-rani-pink animate-pulse" />
-            <span className="font-eyebrow text-[10px] text-silver-bright tracking-[0.38em] uppercase">
-              ಬಿದ್ರಿ ಕಲೆ · BAHMANI BIDRIWARE × ILKAL HANDLOOM
-            </span>
-          </motion.div>
-
-          {/* Grand Headline with Indian Pop Street Warmth */}
+      {/* Hero Content */}
+      <div className="container-luxury relative z-30 pt-32 pb-16 sm:pt-36 sm:pb-20">
+        <div className="max-w-xl space-y-6">
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display headline-clamp font-light text-ivory leading-[1.03] drop-shadow-sm"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-ivory leading-[1.08]"
           >
-            BLACK METAL.<br />
-            <span className="text-silver-bright">PURE SILVER.</span><br />
-            <span className="italic text-antique-gold font-normal">MADE FOR NOW.</span>
+            Authentic Bidriware.{' '}
+            <span className="text-silver-bright">Handcrafted in Bidar.</span>
           </motion.h1>
 
-          {/* Story-driven Subtitle */}
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="font-body text-base sm:text-lg text-silver-bright/90 font-light leading-relaxed max-w-[52ch]"
+            className="font-body text-base sm:text-lg text-silver-bright/90 font-light leading-relaxed max-w-[48ch]"
           >
-            Authentic Bidriware forged by the last master families of Bidar, styled alongside Karnataka’s iconic handwoven Ilkal sarees. Where 600 years of Deccan royal craft meets bold contemporary Indian street culture.
+            600-year-old craft. Pure silver inlay on darkened metal. GI-certified handicrafts made by master artisan families of Karnataka.
           </motion.p>
 
-          {/* Luxury CTA Links */}
+          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 pt-3"
+            className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2"
           >
             <Link
               href="/shop"
-              className="h-13 px-8 bg-rani-pink text-ivory font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-rani-pink transition-all duration-300 flex items-center space-x-3 shadow-xl"
+              className="h-12 px-8 bg-rani-pink text-ivory font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-rani-pink hover:border-ivory transition-all duration-300 flex items-center space-x-3 shadow-lg rounded-lg"
             >
-              <span>SHOP THE COLLECTION</span>
+              <span>SHOP ALL PRODUCTS</span>
               <ArrowRight size={14} />
             </Link>
 
             <Link
-              href="#street-pop"
-              className="h-13 px-7 bg-ivory/10 backdrop-blur-md text-ivory font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-ivory/30 transition-all duration-300 flex items-center space-x-2"
+              href="/collections"
+              className="h-12 px-7 bg-ivory/10 backdrop-blur-md text-ivory font-eyebrow text-[11px] tracking-[0.35em] uppercase hover:bg-ivory hover:text-bidri-black border border-ivory/30 transition-all duration-300 flex items-center space-x-2 rounded-lg"
             >
-              <span>BIDRI × STREET</span>
+              <span>BROWSE COLLECTIONS</span>
             </Link>
           </motion.div>
 
-          {/* Ribbon Badges */}
+          {/* Trust badges */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px] font-body text-silver-bright/80 border-t border-white/15"
+            className="pt-3 flex flex-wrap gap-x-6 gap-y-2 text-[11px] font-body text-silver-bright/80"
           >
-            <div className="flex items-center space-x-1.5">
-              <span className="text-rani-pink font-bold">✦</span>
-              <span>99.9% Pure Fine Silver</span>
-            </div>
             <div className="flex items-center space-x-1.5">
               <span className="text-saffron font-bold">✦</span>
               <span>GI Tag No. 12 Certified</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-peacock-teal font-bold">✦</span>
-              <span>Direct Artisan Cooperative</span>
+              <span className="text-rani-pink font-bold">✦</span>
+              <span>Pure Silver Inlay</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <span className="text-pop-yellow font-bold">✦</span>
-              <span>Worldwide Express Courier</span>
+              <span className="text-peacock-teal font-bold">✦</span>
+              <span>Free Shipping in India</span>
             </div>
           </motion.div>
         </div>
@@ -122,4 +96,3 @@ export const HeroBanner: React.FC = () => {
     </section>
   );
 };
-
