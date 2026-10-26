@@ -37,42 +37,38 @@ export default function CollectionsPage() {
               <Link
                 key={col.slug}
                 href={`/collections/${col.slug}`}
-                className="group flex flex-col bg-ivory rounded-xl overflow-hidden border border-silver/35 hover:border-silver transition-all duration-300 hover:shadow-lg"
+                className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-[#E2DFD8] hover:border-rani-pink/50 transition-all duration-300 shadow-[0_4px_20px_rgba(20,16,15,0.06)] hover:shadow-[0_16px_36px_rgba(20,16,15,0.14)] hover:-translate-y-1"
               >
-                {/* Image */}
-                <div className="relative aspect-[16/11] w-full bg-mist overflow-hidden">
+                {/* Product Image */}
+                <div className="relative aspect-[4/3] w-full bg-[#FAF8F5] overflow-hidden border-b border-silver/20">
                   <Image
                     src={col.image}
                     alt={col.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bidri-black/70 via-bidri-black/20 to-transparent" />
                   
-                  <div className="absolute top-3.5 left-3.5 bg-ivory/90 px-2.5 py-1 rounded font-eyebrow text-[9px] text-bidri-black tracking-widest uppercase font-medium">
-                    HOUSE {col.numeral}
-                  </div>
-                  
-                  <div className="absolute bottom-3.5 inset-x-3.5 text-ivory">
-                    <h2 className="font-display text-2xl font-light">
-                      {col.name}
-                    </h2>
-                    <p className="font-eyebrow text-[10px] text-antique-gold tracking-widest uppercase mt-0.5">
-                      {col.descriptor} · {colProducts.length} {colProducts.length === 1 ? 'Artefact' : 'Artefacts'}
-                    </p>
+                  {/* Badge */}
+                  <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full font-body text-xs font-semibold text-bidri-black border border-silver/40 shadow-sm">
+                    {colProducts.length} {colProducts.length === 1 ? 'Artefact' : 'Artefacts'}
                   </div>
                 </div>
 
                 {/* Body */}
-                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                  <p className="font-body text-xs text-graphite font-light leading-relaxed">
-                    {col.description}
-                  </p>
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+                  <div className="space-y-1.5">
+                    <h2 className="font-display text-2xl font-normal text-bidri-black group-hover:text-rani-pink transition-colors leading-tight">
+                      {col.name}
+                    </h2>
+                    <p className="font-body text-xs sm:text-[13px] text-graphite/80 font-normal leading-relaxed">
+                      {col.itemsRef}
+                    </p>
+                  </div>
 
-                  <div className="pt-3 border-t border-silver/25 flex items-center justify-between text-xs font-eyebrow tracking-widest text-bidri-black group-hover:text-rani-pink uppercase font-medium">
-                    <span>EXPLORE PRODUCTS</span>
-                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  <div className="w-full h-11 bg-rani-pink group-hover:bg-ilkal-red text-white font-body font-semibold text-sm rounded-lg flex items-center justify-center space-x-2 transition-all duration-200 shadow-sm group-hover:shadow-md">
+                    <span>Browse Collection</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </div>
                 </div>
               </Link>

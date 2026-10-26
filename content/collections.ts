@@ -3,6 +3,7 @@ export interface Collection {
   numeral: string;
   name: string;
   descriptor: string;
+  itemsRef: string;
   headline: string;
   description: string;
   image: string;
@@ -15,39 +16,43 @@ export const collections: Collection[] = [
     numeral: '01',
     name: 'Home Décor & Vases',
     descriptor: 'Living Spaces',
+    itemsRef: 'Surahi Ewers, Bulbous Vases & Lotus Bowls',
     headline: 'Objects of Sculptural Presence',
     description: 'Surahi ewers, bulbous vases, peacock trays, and lotus bowls — handcrafted Bidriware that transforms living spaces into heritage galleries.',
-    image: '/img/editorial/editorial-1.jpg',
+    image: '/img/product/bulbous-vase-12-hero.jpg',
     count: 5,
   },
   {
     slug: 'sculptures-and-statues',
     numeral: '02',
     name: 'Sculptures & Statues',
-    descriptor: 'Cast Metal Sculptures',
+    descriptor: 'Cast Metal Statues',
+    itemsRef: 'Royal Elephant Statues & Animal Figurines',
     headline: 'Artisanal Statues & Royal Motifs',
     description: 'Hand-cast zinc-copper animal figurines, royal elephants, and ceremonial centerpieces chiselled with intricate silver arabesques.',
-    image: '/img/editorial/editorial-3.jpg',
+    image: '/img/collections/elephant_sculpture_collection.jpg',
     count: 3,
   },
   {
     slug: 'barware',
     numeral: '03',
     name: 'Barware & Hospitality',
-    descriptor: 'Evening Rituals',
+    descriptor: 'Evening Entertaining',
+    itemsRef: 'Wine Goblets, Hip Flasks & Bar Coasters',
     headline: 'Chalices, Flasks & Coasters',
     description: 'Heirloom vessels for hospitality, marrying stainless steel liners with six-century-old Bidri silver inlay art.',
-    image: '/img/hero/hero-3.jpg',
+    image: '/img/collections/wine_goblets_collection.jpg',
     count: 4,
   },
   {
     slug: 'desk-and-study',
     numeral: '04',
-    name: 'Desk & Study',
+    name: 'Desk & Office Décor',
     descriptor: 'Workplace Objects',
+    itemsRef: 'Pen Stands, Card Cases & Paperweights',
     headline: 'Instruments of Focus & Thought',
     description: 'Weighted pen rests, card cases, paperweights, and carved letter openers crafted for mindful correspondence and executive desks.',
-    image: '/img/editorial/editorial-2.jpg',
+    image: '/img/collections/desk_accessories_collection.jpg',
     count: 3,
   },
   {
@@ -55,6 +60,7 @@ export const collections: Collection[] = [
     numeral: '05',
     name: 'Traditional Gifts & Boxes',
     descriptor: 'Heirloom Celebrations',
+    itemsRef: 'Royal Paan-Daan Boxes & Keepsake Caskets',
     headline: 'Treasures of Lasting Remembrance',
     description: 'Ceremonial paan-daan boxes and handcrafted caskets for weddings, corporate gifting, and landmark Indian celebrations.',
     image: '/img/editorial/editorial-6.jpg',
@@ -63,8 +69,9 @@ export const collections: Collection[] = [
   {
     slug: 'the-archive',
     numeral: '06',
-    name: 'The Archive',
+    name: 'Museum Masterpieces',
     descriptor: 'Imperial Masterworks',
+    itemsRef: '17th-Century Bahmani Court Huqqa Bases',
     headline: 'Museum Recreations',
     description: 'Single-edition museum recreations hand-cast and inlaid over hundreds of hours by national award-winning master craftsmen.',
     image: '/img/product/bahmani-court-huqqa-base-hero.jpg',

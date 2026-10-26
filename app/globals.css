@@ -22,6 +22,7 @@
 }
 
 :root {
+  --header-height: 100px;
   --bg-ivory: #FBFAF8;
   --text-black: #14100F;
   --text-body: #3A3634;
@@ -30,6 +31,19 @@
   --accent-gold: #D97706;
   --accent-teal: #0D9488;
   --accent-ilkal: #BE123C;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-height: 108px;
+  }
+}
+
+/* Dynamic Hero viewport height beneath complete fixed header */
+.hero-viewport-height {
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
 }
 
 * {
