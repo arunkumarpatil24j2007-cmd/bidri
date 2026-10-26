@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { cormorant, italiana, jost, tiroDevanagari } from './fonts';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
-import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
 import { Footer } from '@/components/layout/Footer';
 import { LayoutClientContainer } from '@/components/layout/LayoutClientContainer';
 
@@ -112,7 +111,6 @@ export default function RootLayout({
         </a>
 
         <SmoothScroll>
-          <AnnouncementBar />
           <LayoutClientContainer>
             <main id="main-content" tabIndex={-1}>
               {children}
