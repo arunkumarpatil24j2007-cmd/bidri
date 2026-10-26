@@ -47,7 +47,7 @@ export const products: Product[] = [
     story: 'An imperial Deccan ewer with an elongated fluted neck and teardrop body. Pure silver wires form flowing vine scrolls (Taar-kashi) and floral medallions across the matte black alloy.',
     care: 'Dust with a soft microfiber cloth. Avoid water exposure. Once a year, apply a tiny drop of pure mustard or groundnut oil with a cotton pad to maintain the velvet black patina.',
     images: {
-      hero: '/img/product/surahi-ewer-hero.jpg',
+      hero: '/img/product/surahi-ewer-craft.jpg',
       macro: '/img/product/surahi-ewer-macro.jpg',
       inFrame: '/img/editorial/editorial-1.jpg',
     },
@@ -74,7 +74,7 @@ export const products: Product[] = [
     story: 'A commanding vessel inspired by 15th-century Bahmani royal court chambers. Intricate Mehtabi (sheet silver cutwork) panels alternate with delicate Taar-kashi wire tendrils.',
     care: 'Display indoors in a dry area. Buff gently with dry cotton flannel.',
     images: {
-      hero: '/img/product/bulbous-vase-12-hero.jpg',
+      hero: '/img/product/bulbous-vase-12-craft.jpg',
       macro: '/img/product/bulbous-vase-12-macro.jpg',
       inFrame: '/img/editorial/editorial-1.jpg',
     },
@@ -101,7 +101,7 @@ export const products: Product[] = [
     story: 'Eight petals unfold from a central rosette, chiselled by hand and filled with hammered pure silver ribbon. Serves as a distinguished centerpiece for sacred spaces and fine dining.',
     care: 'Not recommended for wet liquid food service. Clean dry with soft flannel.',
     images: {
-      hero: '/img/product/lotus-bowl-hero.jpg',
+      hero: '/img/product/lotus-bowl-craft.jpg',
       macro: '/img/product/lotus-bowl-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -128,7 +128,7 @@ export const products: Product[] = [
     story: 'A circular serving platter featuring two mirrored royal peacocks enclosed within concentric floral bands. Hundreds of silver inlays reflect light with radiant contrast.',
     care: 'Dry clean only. Store wrapped in cotton cloth.',
     images: {
-      hero: '/img/product/peacock-tray-14-hero.jpg',
+      hero: '/img/product/peacock-tray-14-craft.jpg',
       macro: '/img/product/peacock-tray-14-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -154,7 +154,7 @@ export const products: Product[] = [
     story: 'Subtle votive pair featuring micro-jaali starbursts in silver wire that catch flame flicker in darkened rooms.',
     care: 'Allow candle wax to cool before gentle removal with a wooden spatula. Do not use metal knives.',
     images: {
-      hero: '/img/product/tea-light-pair-hero.jpg',
+      hero: '/img/product/tea-light-pair-craft.jpg',
       macro: '/img/product/tea-light-pair-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -182,7 +182,7 @@ export const products: Product[] = [
     story: 'Hand-cast animal statues embodying Deccan royal majesty. Each elephant is draped in a ceremonial howdah cloth inlaid with pure silver vine arabesques and floral headgear.',
     care: 'Dust with soft dry brush to reach chiselled contours. Do not wash with water.',
     images: {
-      hero: '/img/product/elephant-curio-pair-hero.jpg',
+      hero: '/img/product/elephant-curio-pair-craft.jpg',
       macro: '/img/product/elephant-curio-pair-macro.jpg',
       inFrame: '/img/editorial/editorial-3.jpg',
     },
@@ -209,7 +209,7 @@ export const products: Product[] = [
     story: 'A sculptural brass-cast blade crowned with a sculpted Bidri elephant finial with pure silver caparison work. Blends functional desk tool with traditional Indian metal statuary.',
     care: 'Wipe with soft lint-free cloth. Keep dry.',
     images: {
-      hero: '/img/product/letter-knife-elephant-hero.jpg',
+      hero: '/img/product/letter-knife-elephant-craft.jpg',
       macro: '/img/product/letter-knife-elephant-macro.jpg',
       inFrame: '/img/editorial/editorial-2.jpg',
     },
@@ -237,7 +237,7 @@ export const products: Product[] = [
     story: 'Curved to fit comfortably against an evening jacket pocket. Outer body cast in Bidri alloy with silver jaali inlay, housing a food-grade 304 stainless steel interior chamber.',
     care: 'Rinse inner chamber with warm water. Wipe exterior dry immediately; avoid submerging outer alloy in soapy water.',
     images: {
-      hero: '/img/product/hip-flask-hero.jpg',
+      hero: '/img/product/hip-flask-craft.jpg',
       macro: '/img/product/hip-flask-macro.jpg',
       inFrame: '/img/hero/hero-3.jpg',
     },
@@ -264,7 +264,7 @@ export const products: Product[] = [
     story: 'Six distinct geometric constellations inlaid into six matching discs, housed in a grooved circular Bidri cradle with velvet feet.',
     care: 'Wipe condensation with soft cotton. Never run under tap water.',
     images: {
-      hero: '/img/product/coaster-set-of-six-hero.jpg',
+      hero: '/img/product/coaster-set-of-six-craft.jpg',
       macro: '/img/product/coaster-set-of-six-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -290,7 +290,7 @@ export const products: Product[] = [
     story: 'Stemmed ceremonial chalices with food-grade pure silver washed inner bowl and dense floral Tarkashi arabesques across the outer bell.',
     care: 'Rinse interior with lukewarm water. Pat dry immediately with soft linen.',
     images: {
-      hero: '/img/product/wine-goblets-pair-hero.jpg',
+      hero: '/img/product/wine-goblets-pair-craft.jpg',
       macro: '/img/product/wine-goblets-pair-macro.jpg',
       inFrame: '/img/editorial/editorial-1.jpg',
     },
@@ -316,7 +316,7 @@ export const products: Product[] = [
     story: 'Rectangular cocktail and decanter tray framed by a perimeter fretwork band with pure silver inlays at each mitered corner.',
     care: 'Clean with damp cotton cloth and immediately dry with soft towel.',
     images: {
-      hero: '/img/product/bar-tray-hero.jpg',
+      hero: '/img/product/bar-tray-craft.jpg',
       macro: '/img/product/bar-tray-macro.jpg',
       inFrame: '/img/hero/hero-3.jpg',
     },
@@ -344,7 +344,7 @@ export const products: Product[] = [
     story: 'A weighted cradle designed for fountain pens, channelling Mahmud Gawan madrasa jaali motifs in pure silver ribbon.',
     care: 'Dust with soft dry cloth. Safe for daily fountain pen resting.',
     images: {
-      hero: '/img/product/pen-rest-holder-hero.jpg',
+      hero: '/img/product/pen-rest-holder-craft.jpg',
       macro: '/img/product/pen-rest-holder-macro.jpg',
       inFrame: '/img/editorial/editorial-2.jpg',
     },
@@ -371,7 +371,7 @@ export const products: Product[] = [
     story: 'Pocket-sized business card case with a spring catch, decorated with delicate floral sprays inlaid in silver wire.',
     care: 'Keep in cloth pouch when carrying in pocket with keys.',
     images: {
-      hero: '/img/product/card-case-hero.jpg',
+      hero: '/img/product/card-case-craft.jpg',
       macro: '/img/product/card-case-macro.jpg',
       inFrame: '/img/editorial/editorial-2.jpg',
     },
@@ -397,7 +397,7 @@ export const products: Product[] = [
     story: 'Heavy hemispherical desk paperweight with a radial sunburst of pure silver wires emanating from a central floral rosette.',
     care: 'Felted bottom prevents desk scratches. Buff dome with dry cotton.',
     images: {
-      hero: '/img/product/round-paperweight-hero.jpg',
+      hero: '/img/product/round-paperweight-craft.jpg',
       macro: '/img/product/round-paperweight-macro.jpg',
       inFrame: '/img/editorial/editorial-2.jpg',
     },
@@ -425,7 +425,7 @@ export const products: Product[] = [
     story: 'A traditional ceremonial casket with internal compartment partition. Fitted with a domed lid completely inlaid in 99.9% fine silver floral vine work.',
     care: 'Wipe with dry microfiber cloth. Do not store moist items directly against the bare metal.',
     images: {
-      hero: '/img/product/paan-daan-box-hero.jpg',
+      hero: '/img/product/paan-daan-box-craft.jpg',
       macro: '/img/product/paan-daan-box-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -452,7 +452,7 @@ export const products: Product[] = [
     story: 'A velvet-lined heirloom chest with brass hinges and latch. Exterior surface is adorned with the historic Bahmani court lotus jaal inlaid in solid silver ribbon.',
     care: 'Keep in dry atmosphere. Clean velvet interior with soft brush.',
     images: {
-      hero: '/img/product/jewellery-casket-hero.jpg',
+      hero: '/img/product/jewellery-casket-craft.jpg',
       macro: '/img/product/jewellery-casket-macro.jpg',
       inFrame: '/img/editorial/editorial-6.jpg',
     },
@@ -480,7 +480,7 @@ export const products: Product[] = [
     story: 'A museum-grade recreation of a 15th-century Bahmani royal court masterpiece. Features dense Zarnishan (low relief inlay) and Tarkashi silver wire work requiring 240 hours of hand chiselling.',
     care: 'Archival display piece. White glove handling recommended. Accompanied by framed master artisan deed.',
     images: {
-      hero: '/img/product/bahmani-court-huqqa-base-hero.jpg',
+      hero: '/img/product/bahmani-court-huqqa-base-craft.jpg',
       macro: '/img/product/bahmani-court-huqqa-base-macro.jpg',
       inFrame: '/img/editorial/editorial-1.jpg',
     },

@@ -19,7 +19,7 @@ export const collections: Collection[] = [
     itemsRef: 'Surahi Ewers, Bulbous Vases & Lotus Bowls',
     headline: 'Objects of Sculptural Presence',
     description: 'Surahi ewers, bulbous vases, peacock trays, and lotus bowls — handcrafted Bidriware that transforms living spaces into heritage galleries.',
-    image: '/img/product/bulbous-vase-12-hero.jpg',
+    image: '/img/product/bulbous-vase-12-craft.jpg',
     count: 5,
   },
   {
@@ -74,7 +74,7 @@ export const collections: Collection[] = [
     itemsRef: '17th-Century Bahmani Court Huqqa Bases',
     headline: 'Museum Recreations',
     description: 'Single-edition museum recreations hand-cast and inlaid over hundreds of hours by national award-winning master craftsmen.',
-    image: '/img/product/bahmani-court-huqqa-base-hero.jpg',
+    image: '/img/product/bahmani-court-huqqa-base-craft.jpg',
     count: 1,
   },
 ];
