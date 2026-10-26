@@ -57,16 +57,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
         }`}
         aria-label="Main Navigation"
       >
-        <div className="container-luxury h-16 sm:h-[72px]">
-          {/* 3-Column Symmetric Grid: Left 1fr, Center auto, Right 1fr */}
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-full w-full gap-2 sm:gap-4">
+        <div className="w-full max-w-[1440px] mx-auto px-2.5 sm:px-6 lg:px-8 h-16 sm:h-[72px]">
+          {/* Header Layout: Absolute-centered on mobile for perfect centering, symmetric grid on desktop */}
+          <div className="relative flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between h-full w-full gap-2 sm:gap-4">
             
             {/* Column 1: Left Navigation Links & Mobile Trigger */}
-            <div className="flex items-center justify-start min-w-0">
+            <div className="flex items-center justify-start min-w-0 z-10">
               {/* Mobile hamburger menu trigger */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden p-2 -ml-2 text-bidri-black hover:text-rani-pink focus-visible:outline-none transition-colors cursor-pointer"
+                className="lg:hidden p-2 -ml-1 text-bidri-black hover:text-rani-pink focus-visible:outline-none transition-colors cursor-pointer rounded-lg hover:bg-mist/80 min-w-[40px] min-h-[40px] flex items-center justify-center"
                 aria-label="Open navigation menu"
               >
                 <Menu size={22} strokeWidth={1.5} />
@@ -97,56 +97,56 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
               </div>
             </div>
 
-            {/* Column 2: Logo — Mathematically centered horizontally, independent of left & right */}
-            <div className="flex items-center justify-center text-center px-2 sm:px-4 shrink-0">
+            {/* Column 2: Logo — Mathematically centered horizontally on all viewports */}
+            <div className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 flex items-center justify-center text-center px-1 sm:px-4 shrink-0 pointer-events-auto z-0">
               <Link
                 href="/"
                 className="inline-flex flex-col items-center justify-center focus-visible:outline-none group py-1"
                 aria-label="Bidri Crafts Home"
               >
-                <span className="font-display text-xl sm:text-2xl lg:text-3xl font-light text-bidri-black tracking-[-0.02em] sm:tracking-[-0.03em] leading-none block group-hover:text-rani-pink transition-colors whitespace-nowrap">
+                <span className="font-display text-[18px] sm:text-2xl lg:text-3xl font-light text-bidri-black tracking-[-0.02em] sm:tracking-[-0.03em] leading-none block group-hover:text-rani-pink transition-colors whitespace-nowrap logo-narrow-screen">
                   BIDRI CRAFTS
                 </span>
-                <span className="font-eyebrow text-[7.5px] sm:text-[8px] lg:text-[8.5px] text-graphite/70 tracking-[0.4em] sm:tracking-[0.45em] uppercase leading-none mt-1">
+                <span className="font-eyebrow text-[6.5px] sm:text-[8px] lg:text-[8.5px] text-graphite/70 tracking-[0.32em] sm:tracking-[0.45em] uppercase leading-none mt-1 whitespace-nowrap logo-subtitle-narrow">
                   BIDAR · EST. 1422
                 </span>
               </Link>
             </div>
 
-            {/* Column 3: Right Controls — Search, Wishlist, Bag */}
-            <div className="flex items-center justify-end space-x-1.5 sm:space-x-3 min-w-0">
-              {/* Search Icon */}
+            {/* Column 3: Right Controls — Wishlist, Bag (and Search on tablet/desktop) */}
+            <div className="flex items-center justify-end space-x-1 sm:space-x-2 md:space-x-3 z-10 shrink-0">
+              {/* Search Icon — hidden on mobile, visible on md+ */}
               <button
                 onClick={onOpenSearch}
-                className="p-1.5 sm:p-2 text-bidri-black hover:text-rani-pink transition-colors focus-visible:outline-none cursor-pointer rounded-full hover:bg-mist/80"
+                className="hidden md:flex p-1.5 sm:p-2 text-bidri-black hover:text-rani-pink transition-colors focus-visible:outline-none cursor-pointer rounded-full hover:bg-mist/80"
                 aria-label="Open search"
               >
                 <Search size={18} strokeWidth={1.5} />
               </button>
 
-              {/* Wishlist Link */}
+              {/* Wishlist Link with item count badge */}
               <Link
                 href="/account"
-                className="relative p-1.5 sm:p-2 text-bidri-black hover:text-rani-pink transition-colors rounded-full hover:bg-mist/80"
+                className="relative p-2 text-bidri-black hover:text-rani-pink transition-colors rounded-full hover:bg-mist/80 min-w-[38px] min-h-[38px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center shrink-0"
                 aria-label={`View Wishlist${savedCount > 0 ? ` (${savedCount} items)` : ''}`}
               >
                 <Heart size={18} strokeWidth={1.5} />
                 {savedCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-4 h-4 rounded-full bg-rani-pink text-ivory text-[9px] font-body font-bold flex items-center justify-center shadow-xs">
+                  <span className="absolute top-0 right-0 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-rani-pink text-ivory text-[8.5px] sm:text-[9px] font-body font-bold flex items-center justify-center shadow-xs pointer-events-none">
                     {savedCount}
                   </span>
                 )}
               </Link>
 
-              {/* Cart Button */}
+              {/* Shopping Bag Button */}
               <button
                 onClick={openCart}
-                className="flex items-center space-x-1.5 sm:space-x-2 bg-bidri-black text-ivory px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg hover:bg-rani-pink transition-all duration-200 focus-visible:outline-none cursor-pointer shadow-xs shrink-0"
+                className="flex items-center space-x-1 sm:space-x-1.5 bg-bidri-black text-ivory px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-rani-pink transition-all duration-200 focus-visible:outline-none cursor-pointer shadow-xs shrink-0 min-h-[36px] sm:min-h-[40px]"
                 aria-label={`Shopping bag with ${cartCount} items`}
               >
                 <ShoppingBag size={14} className="sm:w-[15px] sm:h-[15px]" strokeWidth={1.6} />
-                <span className="font-eyebrow text-[9.5px] sm:text-[10.5px] tracking-[0.18em] sm:tracking-[0.25em] font-medium whitespace-nowrap">
-                  BAG ({cartCount})
+                <span className="font-eyebrow text-[9.5px] sm:text-[10.5px] tracking-[0.14em] sm:tracking-[0.25em] font-medium whitespace-nowrap">
+                  <span className="hide-below-360">BAG </span>({cartCount})
                 </span>
               </button>
             </div>
@@ -267,7 +267,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
               </button>
             </div>
 
-            <div className="py-6 space-y-4">
+            {/* Quick Search in Mobile Drawer */}
+            <div className="pt-4 pb-2">
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenSearch();
+                }}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 bg-mist/70 border border-silver/35 rounded-lg text-graphite/70 text-xs font-body hover:border-silver transition-colors cursor-pointer"
+                aria-label="Search artefacts"
+              >
+                <span className="flex items-center space-x-2.5">
+                  <Search size={15} className="text-bidri-black/60" />
+                  <span>Search artefacts, vases, statues...</span>
+                </span>
+                <span className="text-[10px] uppercase font-eyebrow tracking-wider text-antique-gold font-medium">Search</span>
+              </button>
+            </div>
+
+            <div className="py-4 space-y-4">
               {[
                 { label: 'Shop All Products', href: '/shop', highlight: true },
                 { label: 'Collections', href: '/collections' },

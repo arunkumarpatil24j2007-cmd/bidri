@@ -267,3 +267,17 @@ img {
     scroll-behavior: auto !important;
   }
 }
+
+/* Narrow mobile viewport header optimization (<= 359px) */
+@media (max-width: 359px) {
+  .logo-narrow-screen {
+    font-size: 16.5px !important;
+  }
+  .logo-subtitle-narrow {
+    letter-spacing: 0.22em !important;
+    font-size: 6px !important;
+  }
+  .hide-below-360 {
+    display: none !important;
+  }
+}
