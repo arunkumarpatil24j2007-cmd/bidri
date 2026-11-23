@@ -1,0 +1,22 @@
+BIDRI CRAFTS: FILES FOR HOSTINGER
+
+1. bidri-crafts.zip
+   In WordPress: Appearance → Themes → Add New → Upload Theme → Install.
+   Do not activate it; the setup script does that.
+
+2. bidri-setup.zip
+   In hPanel File Manager: upload it to your HOME folder (not public_html),
+   then right-click it → Extract.
+
+3. Connect over SSH and run:
+     cd ~/domains/YOURDOMAIN.in/public_html
+     bash ~/bidri-setup/setup.sh --live
+
+4. Follow LAUNCH-GUIDE.md from step 4 (contact details, owner login, email,
+   Razorpay, Shiprocket, security, going live).
+
+bidri-studio.zip is a spare copy of the owner panel. The setup script
+already installs it, so you only need this zip if it ever has to be
+reinstalled by hand: Plugins → Add New → Upload Plugin.
+
+OWNER-GUIDE.md is for the shop owner's day-to-day use.
