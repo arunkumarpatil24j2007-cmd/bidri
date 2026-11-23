@@ -15,6 +15,11 @@ BIDRI CRAFTS: FILES FOR HOSTINGER
 4. Follow LAUNCH-GUIDE.md from step 4 (contact details, owner login, email,
    Razorpay, Shiprocket, security, going live).
 
+UPDATING A RUNNING SHOP (e.g. bidricrafts.in):
+   Plugins → Add New → Upload Plugin → bidri-studio.zip → "Replace current with uploaded".
+   Appearance → Themes → Add New → Upload Theme → bidri-crafts.zip → "Replace active with uploaded".
+   The plugin sets up the rest by itself the first time a page loads.
+
 bidri-studio.zip is a spare copy of the owner panel. The setup script
 already installs it, so you only need this zip if it ever has to be
 reinstalled by hand: Plugins → Add New → Upload Plugin.

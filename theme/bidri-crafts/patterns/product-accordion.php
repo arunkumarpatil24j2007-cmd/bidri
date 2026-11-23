@@ -22,8 +22,8 @@
 <!-- /wp:details -->
 
 <!-- wp:details -->
-<details class="wp-block-details"><summary>Shipping &amp; returns</summary><!-- wp:paragraph -->
-<p>Free insured shipping across India, delivered in 3–5 business days. If your piece arrives damaged, tell us within 7 days of delivery and we will replace it. <a href="/shipping/">Shipping</a> · <a href="/returns/">Returns &amp; replacements</a></p>
+<details class="wp-block-details"><summary>Shipping &amp; exchanges</summary><!-- wp:paragraph -->
+<p>Free insured shipping across India, delivered in 3–5 business days. No cancellations or returns. If something isn’t right, ask for an exchange within 7 days of delivery. <a href="/shipping/">Shipping</a> · <a href="/returns/">Exchange policy</a></p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details --></div>
 <!-- /wp:group -->

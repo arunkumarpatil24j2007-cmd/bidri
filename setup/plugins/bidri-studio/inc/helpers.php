@@ -146,3 +146,92 @@ function bs_attr( $product, string $name ): string {
 	}
 	return '';
 }
+
+/** True inside the Studio Android app. */
+function bs_in_app(): bool {
+	return str_contains( (string) ( $_SERVER['HTTP_USER_AGENT'] ?? '' ), 'BidriStudioApp' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+}
+
+/** The Android app download (short address: yourdomain.in/studio/app). */
+function bs_app_download_url(): string {
+	return home_url( '/studio/app' );
+}
+
+function bs_has_app_file(): bool {
+	return file_exists( BIDRI_STUDIO_DIR . '/assets/app/bidri-studio.apk' );
+}
+
+/** WhatsApp link for a phone number, optionally with a message. */
+function bs_whatsapp( string $phone, string $text = '' ): string {
+	$digits = preg_replace( '/\D+/', '', $phone );
+	if ( 10 === strlen( $digits ) ) {
+		$digits = '91' . $digits;
+	}
+	return 'https://wa.me/' . $digits . ( '' !== $text ? '?text=' . rawurlencode( $text ) : '' );
+}
+
+/** One row in a menu list: icon, label, optional count, chevron. */
+function bs_menu_row( string $url, string $icon, string $label, string $note = '', int $count = 0 ): string {
+	return sprintf(
+		'<li><a class="bs-row bs-menu bs-ico--%1$s" href="%2$s"><span class="bs-row__main"><strong>%3$s</strong>%4$s</span>%5$s</a></li>',
+		esc_attr( $icon ),
+		esc_url( $url ),
+		esc_html( $label ),
+		'' !== $note ? '<span class="bs-muted">' . esc_html( $note ) . '</span>' : '',
+		$count ? '<b class="bs-badge bs-badge--inline">' . (int) $count . '</b>' : ''
+	);
+}
+
+/**
+ * Customers, built from paid orders (most buyers check out as guests, so there is no account to list).
+ * Key: email, or phone when there is no email. Newest buyer first.
+ */
+function bs_customers(): array {
+	$orders = wc_get_orders( array(
+		'status'  => BIDRI_STUDIO_PAID,
+		'type'    => 'shop_order',
+		'limit'   => 1000,
+		'orderby' => 'date',
+		'order'   => 'DESC',
+	) );
+	$out = array();
+	foreach ( $orders as $o ) {
+		$key = bs_customer_key( $o );
+		if ( '' === $key ) {
+			continue;
+		}
+		if ( ! isset( $out[ $key ] ) ) {
+			$out[ $key ] = array(
+				'key'    => $key,
+				'name'   => $o->get_formatted_billing_full_name() ?: __( 'Guest', 'bidri-studio' ),
+				'email'  => $o->get_billing_email(),
+				'phone'  => $o->get_billing_phone(),
+				'city'   => $o->get_shipping_city() ?: $o->get_billing_city(),
+				'last'   => $o->get_date_created(),
+				'orders' => array(),
+				'spent'  => 0.0,
+			);
+		}
+		$out[ $key ]['orders'][] = $o;
+		$out[ $key ]['spent']   += (float) $o->get_total() - (float) $o->get_total_refunded();
+	}
+	return $out;
+}
+
+function bs_customer_key( WC_Order $o ): string {
+	$email = strtolower( trim( (string) $o->get_billing_email() ) );
+	return '' !== $email ? $email : substr( preg_replace( '/\D+/', '', (string) $o->get_billing_phone() ), -10 );
+}
+
+/** Courier + tracking number inputs. */
+function bs_tracking_fields(): void {
+	?>
+	<div class="bs-field-row">
+		<div class="bs-field"><label for="bs-courier"><?php esc_html_e( 'Courier', 'bidri-studio' ); ?></label>
+			<input id="bs-courier" type="text" name="courier" list="bs-couriers" autocomplete="off">
+			<datalist id="bs-couriers"><option value="Shiprocket"><option value="Delhivery"><option value="Blue Dart"><option value="DTDC"><option value="India Post"><option value="Xpressbees"><option value="Ekart"></datalist></div>
+		<div class="bs-field"><label for="bs-tracking"><?php esc_html_e( 'Tracking number', 'bidri-studio' ); ?></label>
+			<input id="bs-tracking" type="text" name="tracking" autocomplete="off"></div>
+	</div>
+	<?php
+}

@@ -16,6 +16,6 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"bc-i bc-i--shield"} -->
-<p class="bc-i bc-i--shield">7-day transit guarantee — free replacement if damaged</p>
+<p class="bc-i bc-i--shield">7-day exchange — free if damaged in transit</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

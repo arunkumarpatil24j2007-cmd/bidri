@@ -2,6 +2,20 @@
 
 Everything here is done in WordPress at `https://yourdomain.in/wp-admin`.
 
+## The Studio app (Android)
+On your phone, open **`yourdomain.in/studio/app`**. It downloads the **Studio** app. Open the file and tap **Install**.
+Android asks once to allow installing from your browser (the app isn't from the Play Store): allow it, install, then switch it back off.
+Open Studio, log in with **Remember me** ticked, and tap **Allow** when it asks about notifications.
+
+You'll get a notification for:
+- every **paid order**,
+- every **exchange request** from a customer,
+- a piece that is **down to 1**, and again when it **sells out**.
+
+Notifications arrive within about 15 minutes, or within a minute while the app is open. They need internet.
+Choose which ones you get in **More → Notifications**. If they stop on some phones (Xiaomi, Oppo, Vivo, Realme), go to
+the phone's **Settings → Apps → Studio → Battery** and choose **No restrictions**.
+
 ## Studio — your shop panel
 Open **`yourdomain.in/studio`** and log in with **your own owner account** (the long address `/wp-admin` works too). You land in **Studio**; that's all you need
 day to day. It works on your phone too (tabs at the bottom, like an app).
@@ -20,6 +34,34 @@ from an app store. If it ever asks you to log in again, that's normal. It happen
 | **Orders** | Every order. *To ship* · *Shipped* · *All*, and search by order number, name or phone. **Download** at the bottom gives a spreadsheet (this month / this year / everything) for your accountant or your own records. |
 | **Pieces** | Every piece with its price and stock. Tap **−** / **+** to change stock. **Add a piece** to list a new one. |
 | **Sales** | Revenue, orders and average order for 7 days / 30 days / 12 months, and your best pieces. |
+| **More** | **Exchanges** · **Customers** (everyone who bought, total spent, call or WhatsApp them) · **Discount codes** · **Notifications**. |
+
+## Exchanges (the shop's only after-sale option)
+The shop takes **no cancellations and no returns**. Customers can ask for an **exchange** within 7 days of delivery
+on `yourdomain.in/exchange` (also linked in the "shipped" email and in My account). They give the order number,
+the email or phone they ordered with, the reason and photos.
+
+1. You get a notification and an email; Today shows **Exchange request** at the top.
+2. Open it: the piece, the reason, the photos, the customer's phone and WhatsApp.
+3. **Approve exchange** (you can add a message): the customer is emailed. Arrange the pickup in Shiprocket.
+   When the new piece has gone out, tap **Mark as exchanged**.
+4. Or **Give store credit instead**: the customer is emailed a one-time code worth the piece, for 12 months.
+5. Or **Decline** with a short reason (e.g. the piece was used); the customer is emailed.
+
+## Orders you take on the phone or WhatsApp
+**Orders → New order**: choose the pieces, the customer's name, phone and address.
+- **Send a payment link**: Studio shows a link to send on WhatsApp. The order becomes *To ship* when they pay.
+- **Paid already** (cash, or UPI straight to you): the order goes straight to *To ship* and stock goes down.
+
+## Tracking numbers, notes, packing slips
+- **Mark as shipped → Add tracking number**: the courier and number go into the customer's "shipped" email.
+  Already shipped? Add it on the order, and the customer is emailed.
+- **Notes** on each order are only for you (e.g. "packed with extra bubble wrap").
+- **Packing slip** on each order: print it and put it in the parcel.
+
+## Discount codes
+**More → Discount codes → New code**: the code (e.g. `DIWALI10`), percent or ₹ off, optional end date, minimum order and
+number of uses. **Pause** stops a code without deleting it.
 
 ## When an order comes in
 1. You get a "New order" email, and it appears under **Studio → Orders → To ship**.
@@ -65,8 +107,9 @@ Edit it in **Appearance → Editor → Pages/Templates → Homepage**, then clic
 ## Change contact details
 **Settings → Bidri Crafts.** One place, used everywhere on the site.
 
-## Refund an order
-**Studio → Orders → open it → Refund** (opens WooCommerce's order screen) → **Refund** → enter amount →
+## Refunds (rare)
+The shop doesn't refund, except when it can't fulfil an order (e.g. a piece sold out at the same moment).
+Then: **Studio → Orders → open it → Refund** (opens WooCommerce's order screen) → **Refund** → enter amount →
 **Refund ₹… via Razorpay**. The money goes back to the customer automatically.
 Unpaid orders (awaiting payment) can simply be cancelled from Studio; their pieces go back into stock.
 

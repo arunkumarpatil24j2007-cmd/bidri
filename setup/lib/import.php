@@ -181,7 +181,8 @@ $pages = array(
 	'our-craft'      => array( 'Our Craft', 'page-no-title' ),
 	'contact'        => array( 'Contact', '' ),
 	'shipping'       => array( 'Shipping', '' ),
-	'returns'        => array( 'Returns & replacements', '' ),
+	'returns'        => array( 'Exchange policy', '' ),
+	'exchange'       => array( 'Request an exchange', '' ),
 	'care-guide'     => array( 'Care guide', '' ),
 	'gi-registry'    => array( 'GI Registry · Tag No. 12', '' ),
 	'privacy-policy' => array( 'Privacy Policy', '' ),
@@ -194,7 +195,7 @@ foreach ( $pages as $slug => $meta ) {
 		continue;
 	}
 	$found = get_page_by_path( $slug );
-	if ( $found && ! $force ) {
+	if ( $found && ! $force && 'publish' === $found->post_status ) {
 		$page_ids[ $slug ] = $found->ID;
 		continue;
 	}

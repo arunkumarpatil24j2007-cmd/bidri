@@ -113,6 +113,16 @@ add_action( 'admin_enqueue_scripts', function () {
 	$ver = BIDRI_STUDIO_VERSION . '.' . filemtime( BIDRI_STUDIO_DIR . '/assets/studio.css' );
 	wp_enqueue_style( 'bidri-studio', BIDRI_STUDIO_URL . 'assets/studio.css', array(), $ver );
 	wp_enqueue_script( 'bidri-studio', BIDRI_STUDIO_URL . 'assets/studio.js', array(), $ver, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_add_inline_script( 'bidri-studio', 'window.bsApp=' . wp_json_encode( array(
+		'rest'  => esc_url_raw( rest_url( 'bidri-studio/v1/' ) ),
+		'nonce' => wp_create_nonce( 'wp_rest' ),
+		'home'  => home_url( '/' ),
+		'text'  => array(
+			'on'      => __( 'Notifications are on for this phone.', 'bidri-studio' ),
+			'off'     => __( 'Notifications are off for this phone.', 'bidri-studio' ),
+			'copied'  => __( 'Link copied.', 'bidri-studio' ),
+		),
+	) ) . ';', 'before' );
 
 	// Brand fonts from the Bidri Crafts theme, if it is installed.
 	$fonts = get_theme_root_uri() . '/bidri-crafts/assets/fonts/';

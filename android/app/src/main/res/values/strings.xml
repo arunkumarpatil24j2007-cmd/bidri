@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Studio</string>
+    <string name="offline_title">No internet</string>
+    <string name="offline_retry">Try again</string>
+    <string name="channel_orders">New orders</string>
+    <string name="channel_exchanges">Exchange requests</string>
+    <string name="channel_stock">Running low</string>
+    <string name="no_app">No app on this phone can open that.</string>
+    <string name="downloading">Downloading…</string>
+    <string name="add_photo">Add a photo</string>
+    <string name="share">Share</string>
+</resources>

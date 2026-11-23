@@ -9,7 +9,29 @@ defined( 'ABSPATH' ) || exit;
 
 function bs_screen(): string {
 	$s = sanitize_key( $_GET['bs'] ?? 'today' ); // phpcs:ignore WordPress.Security.NonceVerification
-	return in_array( $s, array( 'today', 'orders', 'order', 'pieces', 'piece', 'sales' ), true ) ? $s : 'today';
+	return array_key_exists( $s, bs_screen_tabs() ) ? $s : 'today';
+}
+
+/** Every screen => the bottom tab it belongs to. */
+function bs_screen_tabs(): array {
+	return array(
+		'today'     => 'today',
+		'orders'    => 'orders',
+		'order'     => 'orders',
+		'neworder'  => 'orders',
+		'slip'      => 'orders',
+		'pieces'    => 'pieces',
+		'piece'     => 'pieces',
+		'sales'     => 'sales',
+		'more'      => 'more',
+		'exchanges' => 'more',
+		'exchange'  => 'more',
+		'customers' => 'more',
+		'customer'  => 'more',
+		'discounts' => 'more',
+		'discount'  => 'more',
+		'notify'    => 'more',
+	);
 }
 
 function bs_messages(): array {
@@ -24,7 +46,26 @@ function bs_messages(): array {
 		'needname'  => __( 'Please give the piece a name.', 'bidri-studio' ),
 		'badphoto'  => __( 'That photo couldn’t be used. Use a JPG, PNG or WebP image.', 'bidri-studio' ),
 		'nochange'  => __( 'Nothing changed.', 'bidri-studio' ),
+		'tracking'  => __( 'Tracking saved. The customer has been emailed.', 'bidri-studio' ),
+		'noted'     => __( 'Note added.', 'bidri-studio' ),
+		'created'   => __( 'Order added.', 'bidri-studio' ),
+		'linkready' => __( 'Order added. Send the payment link below.', 'bidri-studio' ),
+		'needorder' => __( 'Add at least one piece, a name and a phone number.', 'bidri-studio' ),
+		'nostock'   => __( 'Not enough stock for one of those pieces.', 'bidri-studio' ),
+		'discounted'  => __( 'Discount code created.', 'bidri-studio' ),
+		'baddiscount' => __( 'Give the code a name and an amount (percent up to 90).', 'bidri-studio' ),
+		'codeused'    => __( 'That code already exists. Choose another.', 'bidri-studio' ),
+		'exapproved'  => __( 'Approved. The customer has been emailed.', 'bidri-studio' ),
+		'exdeclined'  => __( 'Declined. The customer has been emailed.', 'bidri-studio' ),
+		'exdone'      => __( 'Marked as exchanged.', 'bidri-studio' ),
+		'excredit'    => __( 'Store credit sent to the customer.', 'bidri-studio' ),
+		'needreason'  => __( 'Write a short reason for the customer.', 'bidri-studio' ),
 	);
+}
+
+/** Messages shown as a warning, not a confirmation. */
+function bs_warn_messages(): array {
+	return array( 'needname', 'badphoto', 'needorder', 'nostock', 'baddiscount', 'codeused', 'needreason' );
 }
 
 function bs_render(): void {
@@ -32,13 +73,15 @@ function bs_render(): void {
 		wp_die( esc_html__( 'You don’t have permission to view this page.', 'bidri-studio' ), 403 );
 	}
 	$screen = bs_screen();
-	$tab    = array( 'order' => 'orders', 'piece' => 'pieces' )[ $screen ] ?? $screen;
+	$tab    = bs_screen_tabs()[ $screen ];
+	$open_ex = bs_open_exchange_count();
 	$to_ship = count( wc_get_orders( array( 'status' => 'wc-processing', 'limit' => -1, 'return' => 'ids', 'type' => 'shop_order' ) ) );
 	$tabs   = array(
 		'today'  => array( __( 'Today', 'bidri-studio' ), 'silver-sparkle' ),
 		'orders' => array( __( 'Orders', 'bidri-studio' ), 'bag' ),
 		'pieces' => array( __( 'Pieces', 'bidri-studio' ), 'cat-home-decor' ),
 		'sales'  => array( __( 'Sales', 'bidri-studio' ), 'chart' ),
+		'more'   => array( __( 'More', 'bidri-studio' ), 'more' ),
 	);
 	$msg  = sanitize_key( $_GET['msg'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification
 	$msgs = bs_messages();
@@ -52,6 +95,7 @@ function bs_render(): void {
 					<a href="<?php echo esc_url( bs_url( $key ) ); ?>" class="bs-tab bs-ico--<?php echo esc_attr( $t[1] ); ?>"<?php echo $key === $tab ? ' aria-current="page"' : ''; ?>>
 						<span><?php echo esc_html( $t[0] ); ?></span>
 						<?php if ( 'orders' === $key && $to_ship ) : ?><b class="bs-badge" aria-label="<?php echo esc_attr( sprintf( _n( '%d to ship', '%d to ship', $to_ship, 'bidri-studio' ), $to_ship ) ); ?>"><?php echo (int) $to_ship; ?></b><?php endif; ?>
+						<?php if ( 'more' === $key && $open_ex ) : ?><b class="bs-badge" aria-label="<?php echo esc_attr( sprintf( _n( '%d exchange request', '%d exchange requests', $open_ex, 'bidri-studio' ), $open_ex ) ); ?>"><?php echo (int) $open_ex; ?></b><?php endif; ?>
 					</a>
 				<?php endforeach; ?>
 			</nav>
@@ -71,7 +115,7 @@ function bs_render(): void {
 		</header>
 
 		<?php if ( isset( $msgs[ $msg ] ) ) : ?>
-			<p class="bs-toast<?php echo in_array( $msg, array( 'needname', 'badphoto' ), true ) ? ' bs-toast--warn' : ''; ?>" role="status"><?php echo esc_html( $msgs[ $msg ] ); ?></p>
+			<p class="bs-toast<?php echo in_array( $msg, bs_warn_messages(), true ) ? ' bs-toast--warn' : ''; ?>" role="status"><?php echo esc_html( $msgs[ $msg ] ); ?></p>
 		<?php endif; ?>
 
 		<main class="bs-main">

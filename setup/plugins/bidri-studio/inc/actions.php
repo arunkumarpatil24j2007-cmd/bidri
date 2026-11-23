@@ -15,7 +15,8 @@ function bs_guard( string $action, string $cap ): void {
 	if ( ! is_user_logged_in() || ! current_user_can( $cap ) ) {
 		wp_die( esc_html__( 'You don’t have permission to do that.', 'bidri-studio' ), 403 );
 	}
-	if ( ! isset( $_POST['_bsnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_bsnonce'] ) ), 'bidri_studio_' . $action ) ) {
+	$nonce = $_POST['_bsnonce'] ?? $_GET['_bsnonce'] ?? ''; // phpcs:ignore WordPress.Security -- verified here. GET only for file downloads.
+	if ( '' === $nonce || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $nonce ) ), 'bidri_studio_' . $action ) ) {
 		wp_die( esc_html__( 'This page expired. Go back, refresh and try again.', 'bidri-studio' ), 403 );
 	}
 }
@@ -43,6 +44,7 @@ add_action( 'admin_post_bidri_studio_ship', function () {
 	if ( ! $order || 'processing' !== $order->get_status() ) {
 		bs_back( 'orders', array(), 'nochange' );
 	}
+	bs_save_tracking( $order );
 	$order->update_status( 'completed', __( 'Marked shipped in Studio.', 'bidri-studio' ), true );
 	bs_back( 'order', array( 'id' => $order->get_id() ), 'shipped' );
 } );
@@ -197,4 +199,190 @@ add_action( 'admin_post_bidri_studio_save', function () {
 	}
 
 	bs_back( 'piece', array( 'id' => $id ), $id === bs_post_int( 'piece' ) ? 'saved' : 'added' );
+} );
+
+/* ---------------------------------------------------------------- Tracking & notes */
+
+/** Courier + tracking number from the form, if given. Returns true when something changed. */
+function bs_save_tracking( WC_Order $order ): bool {
+	$courier  = bs_post_text( 'courier' );
+	$tracking = bs_post_text( 'tracking' );
+	if ( '' === $tracking ) {
+		return false;
+	}
+	$order->update_meta_data( '_bs_courier', $courier );
+	$order->update_meta_data( '_bs_tracking', $tracking );
+	$order->save_meta_data();
+	return true;
+}
+
+/* Tracking added after shipping: save it and email the customer. */
+add_action( 'admin_post_bidri_studio_tracking', function () {
+	bs_guard( 'tracking', 'edit_shop_orders' );
+	$order = wc_get_order( bs_post_int( 'order' ) );
+	if ( ! $order || ! bs_save_tracking( $order ) ) {
+		bs_back( 'order', array( 'id' => bs_post_int( 'order' ) ), 'nochange' );
+	}
+	$order->add_order_note( bs_tracking_line( $order ), true ); // true = emailed to the customer.
+	bs_back( 'order', array( 'id' => $order->get_id() ), 'tracking' );
+} );
+
+function bs_tracking_line( WC_Order $order ): string {
+	$courier = (string) $order->get_meta( '_bs_courier' );
+	/* translators: 1: courier name, 2: tracking number */
+	return $courier ? sprintf( __( 'Your order is on its way with %1$s. Tracking number: %2$s', 'bidri-studio' ), $courier, $order->get_meta( '_bs_tracking' ) )
+		/* translators: %s: tracking number */
+		: sprintf( __( 'Your order is on its way. Tracking number: %s', 'bidri-studio' ), $order->get_meta( '_bs_tracking' ) );
+}
+
+/* The "shipped" email carries the tracking number when there is one. */
+add_action( 'woocommerce_email_before_order_table', function ( $order, $sent_to_admin, $plain, $email = null ) {
+	if ( $sent_to_admin || ! $email || 'customer_completed_order' !== $email->id || ! $order->get_meta( '_bs_tracking' ) ) {
+		return;
+	}
+	echo $plain ? "\n" . esc_html( bs_tracking_line( $order ) ) . "\n" : '<p><strong>' . esc_html( bs_tracking_line( $order ) ) . '</strong></p>';
+}, 20, 4 );
+
+add_action( 'admin_post_bidri_studio_note', function () {
+	bs_guard( 'note', 'edit_shop_orders' );
+	$order = wc_get_order( bs_post_int( 'order' ) );
+	$note  = bs_post_text( 'note', true );
+	if ( ! $order || '' === $note ) {
+		bs_back( 'order', array( 'id' => bs_post_int( 'order' ) ), 'nochange' );
+	}
+	$order->add_order_note( $note, false, true ); // Private: only the shop sees it.
+	bs_back( 'order', array( 'id' => $order->get_id() ), 'noted' );
+} );
+
+/* ---------------------------------------------------------------- New order (phone / WhatsApp sales) */
+
+add_action( 'admin_post_bidri_studio_neworder', function () {
+	bs_guard( 'neworder', 'edit_shop_orders' );
+	// phpcs:disable WordPress.Security.NonceVerification -- checked in bs_guard().
+	$ids  = array_map( 'absint', (array) ( $_POST['piece'] ?? array() ) );
+	$qtys = array_map( 'absint', (array) ( $_POST['qty'] ?? array() ) );
+	// phpcs:enable
+	$lines = array();
+	foreach ( $ids as $i => $pid ) {
+		$product = $pid ? wc_get_product( $pid ) : null;
+		$qty     = max( 1, $qtys[ $i ] ?? 1 );
+		if ( $product ) {
+			$lines[ $pid ] = array( $product, ( $lines[ $pid ][1] ?? 0 ) + $qty );
+		}
+	}
+	$name  = bs_post_text( 'name' );
+	$phone = bs_post_text( 'phone' );
+	if ( ! $lines || '' === $name || '' === $phone ) {
+		bs_back( 'neworder', array(), 'needorder' );
+	}
+	foreach ( $lines as [ $product, $qty ] ) {
+		if ( $product->managing_stock() && $qty > (int) $product->get_stock_quantity() ) {
+			bs_back( 'neworder', array(), 'nostock' );
+		}
+	}
+
+	$order = wc_create_order( array( 'created_via' => 'bidri-studio' ) );
+	if ( is_wp_error( $order ) ) {
+		bs_back( 'orders', array(), 'nochange' );
+	}
+	foreach ( $lines as [ $product, $qty ] ) {
+		$order->add_product( $product, $qty );
+	}
+	$parts = preg_split( '/\s+/', $name, 2 );
+	$state = strtoupper( bs_post_text( 'state' ) );
+	$addr  = array(
+		'first_name' => $parts[0],
+		'last_name'  => $parts[1] ?? '',
+		'phone'      => $phone,
+		'email'      => sanitize_email( bs_post_text( 'email' ) ),
+		'address_1'  => bs_post_text( 'address' ),
+		'city'       => bs_post_text( 'city' ),
+		'state'      => isset( WC()->countries->get_states( 'IN' )[ $state ] ) ? $state : '',
+		'postcode'   => preg_replace( '/\D/', '', bs_post_text( 'pin' ) ),
+		'country'    => 'IN',
+	);
+	$order->set_address( $addr, 'billing' );
+	$order->set_address( $addr, 'shipping' );
+	$order->calculate_totals();
+
+	if ( 'direct' === bs_post_text( 'paid' ) ) {
+		$order->update_meta_data( '_bs_paid_directly', 1 );
+		$order->set_payment_method_title( __( 'Paid directly', 'bidri-studio' ) );
+		$order->set_date_paid( time() );
+		$order->save();
+		$order->update_status( 'processing', __( 'Entered in Studio, paid directly to the shop.', 'bidri-studio' ) ); // Stock goes down, customer gets the confirmation email.
+		bs_back( 'order', array( 'id' => $order->get_id() ), 'created' );
+	}
+	$order->save();
+	$order->update_status( 'pending', __( 'Entered in Studio. Payment link to be sent to the customer.', 'bidri-studio' ) );
+	bs_back( 'order', array( 'id' => $order->get_id() ), 'linkready' );
+} );
+
+/* ---------------------------------------------------------------- Discounts */
+
+add_action( 'admin_post_bidri_studio_discount', function () {
+	bs_guard( 'discount', 'edit_shop_coupons' );
+	$code   = strtoupper( preg_replace( '/[^A-Za-z0-9-]/', '', bs_post_text( 'code' ) ) );
+	$type   = 'fixed' === bs_post_text( 'type' ) ? 'fixed_cart' : 'percent';
+	$amount = (float) preg_replace( '/[^\d.]/', '', bs_post_text( 'amount' ) );
+	if ( '' === $code || $amount <= 0 || ( 'percent' === $type && $amount > 90 ) ) {
+		bs_back( 'discount', array(), 'baddiscount' );
+	}
+	if ( wc_get_coupon_id_by_code( $code ) ) {
+		bs_back( 'discount', array(), 'codeused' );
+	}
+	$c = new WC_Coupon();
+	$c->set_code( $code );
+	$c->set_discount_type( $type );
+	$c->set_amount( $amount );
+	$c->set_individual_use( true );
+	$min = (float) preg_replace( '/[^\d.]/', '', bs_post_text( 'min' ) );
+	if ( $min > 0 ) {
+		$c->set_minimum_amount( $min );
+	}
+	$uses = bs_post_int( 'uses' );
+	if ( $uses > 0 ) {
+		$c->set_usage_limit( $uses );
+	}
+	if ( ! empty( $_POST['once'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$c->set_usage_limit_per_user( 1 );
+	}
+	$ends = bs_post_text( 'ends' );
+	if ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $ends ) ) {
+		$c->set_date_expires( ( new DateTimeImmutable( $ends . ' 23:59:59', wp_timezone() ) )->getTimestamp() );
+	}
+	$c->save();
+	bs_back( 'discounts', array(), 'discounted' );
+} );
+
+/* Pause / resume a code. */
+add_action( 'admin_post_bidri_studio_discount_toggle', function () {
+	bs_guard( 'discount_toggle', 'edit_shop_coupons' );
+	$id = bs_post_int( 'coupon' );
+	if ( 'shop_coupon' === get_post_type( $id ) ) {
+		wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' === get_post_status( $id ) ? 'draft' : 'publish' ) );
+	}
+	bs_back( 'discounts', array(), 'saved' );
+} );
+
+/* ---------------------------------------------------------------- Notifications */
+
+add_action( 'admin_post_bidri_studio_notify', function () {
+	bs_guard( 'notify', 'manage_woocommerce' );
+	$on    = (array) ( $_POST['on'] ?? array() ); // phpcs:ignore WordPress.Security.NonceVerification
+	$prefs = array();
+	foreach ( array_keys( bs_event_types() ) as $type ) {
+		$prefs[ $type ] = isset( $on[ $type ] ) ? 1 : 0;
+	}
+	update_user_meta( get_current_user_id(), '_bs_notify', $prefs );
+	bs_back( 'notify', array(), 'saved' );
+} );
+
+add_action( 'admin_post_bidri_studio_device_remove', function () {
+	bs_guard( 'device_remove', 'manage_woocommerce' );
+	$uid  = get_current_user_id();
+	$list = bs_devices( $uid );
+	unset( $list[ bs_post_text( 'key' ) ] );
+	update_user_meta( $uid, '_bs_devices', $list );
+	bs_back( 'notify', array(), 'saved' );
 } );

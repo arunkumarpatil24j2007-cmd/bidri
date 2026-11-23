@@ -19,6 +19,12 @@ $hello   = $hour < 12 ? __( 'Good morning', 'bidri-studio' ) : ( $hour < 17 ? __
 	<h1><?php echo esc_html( $hello ); ?></h1>
 </div>
 
+<?php $open_ex = bs_exchanges( array( 'requested' ) ); if ( $open_ex ) : ?>
+	<a class="bs-alert bs-ico--exchange" href="<?php echo esc_url( 1 === count( $open_ex ) ? bs_url( 'exchange', array( 'id' => $open_ex[0]['id'] ) ) : bs_url( 'exchanges' ) ); ?>">
+		<span><strong><?php echo esc_html( sprintf( _n( '%d exchange request', '%d exchange requests', count( $open_ex ), 'bidri-studio' ), count( $open_ex ) ) ); ?></strong><span class="bs-muted"><?php esc_html_e( 'Reply within 2 working days', 'bidri-studio' ); ?></span></span>
+	</a>
+<?php endif; ?>
+
 <div class="bs-stats">
 	<a class="bs-stat" href="<?php echo esc_url( bs_url( 'sales' ) ); ?>">
 		<span class="bs-stat__label"><?php esc_html_e( 'Sales today', 'bidri-studio' ); ?></span>

@@ -39,6 +39,7 @@ $orders  = array_slice( $orders, 0, $limit );
 ?>
 <div class="bs-head bs-head--row">
 	<h1><?php esc_html_e( 'Orders', 'bidri-studio' ); ?></h1>
+	<a class="bs-btn bs-ico--plus bs-head__action" href="<?php echo esc_url( bs_url( 'neworder' ) ); ?>"><?php esc_html_e( 'New order', 'bidri-studio' ); ?></a>
 	<form class="bs-search" method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" role="search">
 		<input type="hidden" name="page" value="bidri-studio"><input type="hidden" name="bs" value="orders">
 		<label class="screen-reader-text" for="bs-q"><?php esc_html_e( 'Search orders', 'bidri-studio' ); ?></label>
@@ -70,7 +71,7 @@ $orders  = array_slice( $orders, 0, $limit );
 	<?php endif; ?>
 <?php endif; ?>
 
-<form class="bs-download" method="post" action="<?php echo esc_url( bs_action_url() ); ?>">
+<form class="bs-download" method="get" action="<?php echo esc_url( bs_action_url() ); ?>">
 	<?php bs_form_fields( 'export' ); ?>
 	<label class="screen-reader-text" for="bs-range"><?php esc_html_e( 'Orders to download', 'bidri-studio' ); ?></label>
 	<select id="bs-range" name="range">

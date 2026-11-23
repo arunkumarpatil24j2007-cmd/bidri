@@ -3,6 +3,7 @@
  * Two small conveniences for the owner.
  *
  *  - yourdomain.in/studio  → opens Studio (asks for the login first if needed).
+ *  - yourdomain.in/studio/app → downloads the Studio Android app.
  *  - Download order history as a spreadsheet file (CSV: opens in Excel / Google Sheets / Numbers).
  *
  * @package bidri-studio
@@ -17,7 +18,11 @@ add_action( 'init', function () {
 	}
 	$path = wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), PHP_URL_PATH );
 	$base = untrailingslashit( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ) );
-	if ( untrailingslashit( (string) $path ) === $base . '/studio' ) {
+	$path = untrailingslashit( (string) $path );
+	if ( $path === $base . '/studio/app' ) {
+		bs_send_app_file();
+	}
+	if ( $path === $base . '/studio' ) {
 		nocache_headers();
 		wp_safe_redirect( bs_url() ); // Logged-out visitors are sent to the login page by WordPress, then back here.
 		exit;
@@ -33,7 +38,7 @@ function bs_csv_cell( $value ): string {
 add_action( 'admin_post_bidri_studio_export', function () {
 	bs_guard( 'export', 'edit_shop_orders' );
 
-	$range = sanitize_key( $_POST['range'] ?? 'month' ); // phpcs:ignore WordPress.Security.NonceVerification -- checked in bs_guard().
+	$range = sanitize_key( $_REQUEST['range'] ?? 'month' ); // phpcs:ignore WordPress.Security.NonceVerification -- checked in bs_guard().
 	$now   = current_datetime();
 	$from  = array(
 		'month' => $now->modify( 'first day of this month 00:00:00' ),
@@ -86,3 +91,19 @@ add_action( 'admin_post_bidri_studio_export', function () {
 	fclose( $out );
 	exit;
 } );
+
+/* The Android app, served with the right file type so phones offer to install it. */
+function bs_send_app_file(): void {
+	$file = BIDRI_STUDIO_DIR . '/assets/app/bidri-studio.apk';
+	if ( ! file_exists( $file ) ) {
+		wp_safe_redirect( home_url( '/' ) );
+		exit;
+	}
+	do_action( 'litespeed_control_set_nocache', 'app download' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName
+	nocache_headers();
+	header( 'Content-Type: application/vnd.android.package-archive' );
+	header( 'Content-Disposition: attachment; filename="Bidri-Studio.apk"' );
+	header( 'Content-Length: ' . filesize( $file ) );
+	readfile( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	exit;
+}

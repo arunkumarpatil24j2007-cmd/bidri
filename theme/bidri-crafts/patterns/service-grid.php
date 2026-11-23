@@ -8,7 +8,7 @@ $bc_items = array(
 	array( 'truck', 'Free insured shipping', 'Delivered by courier across India in 3–5 business days.' ),
 	array( 'certificate', 'GI certificate included', 'Every piece ships with its GI Tag No. 12 authenticity certificate.' ),
 	array( 'lock', 'Secure payments', 'UPI, credit and debit cards, and netbanking.' ),
-	array( 'shield', '7-day transit guarantee', 'Damaged in transit? We replace it, no questions asked.' ),
+	array( 'shield', '7-day exchange', 'Damaged in transit? We exchange it free.' ),
 	array( 'artisans', 'Direct from artisans', 'Fair trade with hereditary Bidar families — no middlemen.' ),
 	array( 'chat', 'Talk to us', 'Help on WhatsApp and phone for gifting and custom orders.' ),
 );

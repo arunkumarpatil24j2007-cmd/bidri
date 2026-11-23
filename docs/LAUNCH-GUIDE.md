@@ -68,6 +68,10 @@ Empty fields are simply hidden, so nothing half-finished ever shows.
 
 ## 4b. The owner's login for Studio — **YOU** (2 minutes)
 
+(The owner can also install the **Studio Android app** from `yourdomain.in/studio/app`: notifications for orders,
+exchange requests and low stock. See `OWNER-GUIDE.md`.)
+
+
 WordPress → **Users → Add New User**: the owner's name and email, role **Shop manager**, a strong password.
 The owner opens **`yourdomain.in/studio`** (put it on their phone's home screen; see `OWNER-GUIDE.md`). That account opens straight into **Studio** (Today · Orders · Pieces · Sales) and can't see or break anything else.
 Keep your own Administrator account for setup and updates. Turn on two-factor for both (step 8).
@@ -91,6 +95,7 @@ Without this, order emails often land in spam or never arrive.
 
 1. Sign up at **razorpay.com** → complete **KYC**: PAN, bank account, business details, website URL.
    Razorpay checks your website for Contact, Terms, Privacy, Refund/Cancellation and Shipping pages. **All of these already exist.**
+   The Refund/Cancellation page is **Exchange policy** (`/returns/`): no cancellations or returns, exchanges within 7 days.
    Read them once (step 10) before you submit.
 2. In the Razorpay dashboard switch to **Test mode** → **Account & Settings → API keys** → generate a **test** key.
 3. WordPress → **WooCommerce → Settings → Payments → Razorpay** → paste Key ID + Key Secret → **Enable** → Save.
@@ -102,6 +107,7 @@ Without this, order emails often land in spam or never arrive.
    order shows **Processing**, stock goes down, you and the "customer" both get emails, gift note appears in the order.
    Also try cancelling a payment: the order should stay **Pending/Failed** and the bag keeps its items.
 6. Refund one test order from WooCommerce → Orders → Refund → "Refund via Razorpay". It should show in the Razorpay dashboard.
+   (Refunds are only for orders you can't fulfil; customers get exchanges, not refunds.)
 7. After KYC approval: switch the dashboard to **Live mode**, generate **live** keys (`rzp_live_…`), paste them into the
    plugin, and check the webhook again in Live mode.
 
@@ -143,9 +149,10 @@ until you confirm your GST registration, rate and HSN code. Once you have them: 
 
 ## 10. Before you go live
 
-1. Read every policy page (Shipping, Returns & replacements, Privacy, Terms, Care guide) and change anything that
-   isn't how you actually work. **In particular:** cancellation before dispatch = full refund, refunds in 5–7 business days,
-   7-day damage replacement. These are sensible defaults, not legal advice.
+1. Read every policy page (Shipping, Exchange policy, Privacy, Terms, Care guide) and change anything that
+   isn't how you actually work. **In particular:** no cancellations or returns; exchanges within 7 days of delivery;
+   "I'd like a different piece" exchanges are at the customer's cost for courier and any price difference; store credit
+   for 12 months as the alternative. These are sensible defaults, not legal advice.
 2. **Replace the product photos with real photos of your actual pieces** (see "Photos" in `docs/OWNER-GUIDE.md`).
    The current ones are carried over from the old site and are fine for building, but customers must see the real piece they will receive.
 3. Run the checker. Every line must say OK:
