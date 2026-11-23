@@ -1,0 +1,70 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","anchor":"main","className":"bc-main bc-shop","layout":{"type":"constrained","contentSize":"1360px"}} -->
+<main class="wp-block-group bc-main bc-shop" id="main"><!-- wp:group {"align":"wide","className":"bc-pagehead","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide bc-pagehead"><!-- wp:woocommerce/breadcrumbs {"fontSize":"small"} /-->
+
+<!-- wp:group {"className":"bc-pagehead__row","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
+<div class="wp-block-group bc-pagehead__row"><!-- wp:group {"className":"bc-pagehead__text","layout":{"type":"default"}} -->
+<div class="wp-block-group bc-pagehead__text"><!-- wp:query-title {"type":"archive","showPrefix":false,"level":1} /-->
+
+<!-- wp:term-description {"className":"bc-lead"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:woocommerce/catalog-sorting {"useLabel":true,"className":"bc-sort"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:woocommerce/store-notices /-->
+
+<!-- wp:group {"align":"wide","className":"bc-shop__layout","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide bc-shop__layout"><!-- wp:pattern {"slug":"bidri-crafts/shop-sidebar"} /-->
+
+<!-- wp:group {"className":"bc-shop__results","layout":{"type":"default"}} -->
+<div class="wp-block-group bc-shop__results"><!-- wp:woocommerce/product-results-count /-->
+
+<!-- wp:woocommerce/product-collection {"queryId":0,"query":{"woocommerceAttributes":[],"woocommerceStockStatus":["instock","outofstock","onbackorder"],"taxQuery":{},"isProductCollectionBlock":true,"perPage":12,"pages":0,"offset":0,"postType":"product","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"sticky":"","inherit":true},"tagName":"div","dimensions":{"widthType":"fill","fixedWidth":""},"displayLayout":{"type":"flex","columns":3,"shrinkColumns":true},"convertedFromProducts":false,"queryContextIncludes":["collection"],"className":"bc-products"} -->
+<div class="wp-block-woocommerce-product-collection bc-products">
+<!-- wp:woocommerce/product-template {"className":"bc-grid"} -->
+<!-- wp:woocommerce/product-image {"showSaleBadge":false,"imageSizing":"thumbnail","aspectRatio":"1","scale":"cover","className":"bc-card__media"} /-->
+
+<!-- wp:group {"className":"bc-card__body","layout":{"type":"default"}} -->
+<div class="wp-block-group bc-card__body"><!-- wp:post-title {"level":2,"isLink":true,"className":"bc-card__title","__woocommerceNamespace":"woocommerce/product-collection/product-title"} /-->
+
+<!-- wp:paragraph {"className":"bc-card__meta"} -->
+<p class="bc-card__meta">Pure silver · GI Tag #12</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:woocommerce/product-price {"className":"bc-card__price"} /-->
+
+<!-- wp:woocommerce/product-button {"className":"bc-card__btn"} /--></div>
+<!-- /wp:group -->
+<!-- /wp:woocommerce/product-template -->
+
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:woocommerce/product-collection-no-results -->
+<!-- wp:group {"className":"bc-empty","layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+<div class="wp-block-group bc-empty"><!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">No pieces match these filters</h2>
+<!-- /wp:heading -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/shop/">Clear filters</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group -->
+<!-- /wp:woocommerce/product-collection-no-results --></div>
+<!-- /wp:woocommerce/product-collection --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
